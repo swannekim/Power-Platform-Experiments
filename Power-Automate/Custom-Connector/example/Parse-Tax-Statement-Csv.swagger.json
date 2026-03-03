@@ -1,0 +1,72 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Parse Tax Statement Csv",
+    "description": "Parse Tax Statement Full Txt to Csv",
+    "version": "1.0"
+  },
+  "host": "parsetaxstatementcsv.com",
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [],
+  "produces": [],
+  "paths": {
+    "/parse-tax-csv": {
+      "post": {
+        "responses": {
+          "default": {
+            "description": "default",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "rowCount": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "rowCount"
+                },
+                "csv": {
+                  "type": "string",
+                  "description": "csv"
+                },
+                "csvBase64Utf8Bom": {
+                  "type": "string",
+                  "description": "csvBase64Utf8Bom"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "ParseTaxStatementCsv",
+        "x-ms-visibility": "important",
+        "summary": "ParseTaxStatementCsv",
+        "description": "parse tax statement to csv - poc",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": false,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "fullText": {
+                  "type": "string",
+                  "description": "fullText"
+                }
+              },
+              "x-ms-visibility": "important"
+            },
+            "x-ms-visibility": "important"
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {},
+  "parameters": {},
+  "responses": {},
+  "security": [],
+  "tags": [],
+  "securityDefinitions": {}
+}
