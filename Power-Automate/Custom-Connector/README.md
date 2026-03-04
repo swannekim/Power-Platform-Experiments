@@ -165,7 +165,7 @@ Your code MUST:
 - Have a maximum execution time of five seconds
 - Have a file size no larger than 1 MB
 
-[🏗️ How to Create Custom Connector: Example with Screenshots](Power-Automate/Custom-Connector/example/README.md)
+[🏗️ How to Create Custom Connector: Example with Screenshots](./example/README.md)
 
 Creating from blank is useful for learning, but OpenAPI import is recommended for production.
 
