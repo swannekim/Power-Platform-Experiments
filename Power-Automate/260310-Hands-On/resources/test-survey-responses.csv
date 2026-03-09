@@ -1,0 +1,11 @@
+Title,ResponseID,SubmittedAt,EmployeeDept,FeedbackType,FeedbackText,SatisfactionScore,IsReported
+Internal Feedback Survey,101,3/5/2026 9:10 AM,Engineering,Tool,"The deployment workflow is smoother than before, but error messages are still hard to understand.",4,False
+Internal Feedback Survey,102,3/5/2026 9:22 AM,Marketing,Process,Content approval cycles feel overly complex and slow down campaign execution.,3,False
+Internal Feedback Survey,103,3/6/2026 10:35 AM,Sales,Tool,"Dashboard performance has improved, but data refresh timing is sometimes unreliable.",3,False
+Internal Feedback Survey,104,3/6/2026 2:48 PM,HR,Culture,"I feel supported by my manager, though cross-team collaboration could be better.",4,False
+Internal Feedback Survey,105,3/6/2026 5:01 PM,Finance,Process,"Expense reporting is clearer now, but manual steps still remain.",4,False
+Internal Feedback Survey,106,3/7/2026 10:15 AM,Engineering,Workload,"Sprint commitments are often too aggressive, leading to burnout.",2,False
+Internal Feedback Survey,107,3/7/2026 11:28 AM,Marketing,Culture,"There is a strong sense of ownership within the team, which I really value.",5,False
+Internal Feedback Survey,108,3/8/2026 3:41 PM,Sales,Process,Communication around priority changes needs to be more proactive.,3,False
+Internal Feedback Survey,109,3/9/2026 9:55 AM,Engineering,Tool,The internal API documentation is outdated and makes onboarding harder.,2,False
+Internal Feedback Survey,110,3/9/2026 1:07 PM,HR,Culture,Flexible working policies are appreciated and well communicated.,5,False
