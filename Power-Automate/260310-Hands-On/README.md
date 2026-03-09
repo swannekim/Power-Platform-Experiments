@@ -21,11 +21,13 @@
 ![alt text](img/image-5.png)
 
 - Upload [Sample Excel file](./resources/Work_Approval_Sample.xlsx) on your SharePoint Document Library
+- Customize `Requestor Email` & `Approver Email` as your Microsoft tenant setting
 ![alt text](img/image-6.png)
 
 ## 01. Batch Approvals for Work Requests in Excel
 ### Create Cloud Flow: instant cloud flow, manual trigger
 ![alt text](img/image-4.png)
+
 ### Excel Online (Business): List rows present in a table
 ![alt text](img/image-8.png)
 ![alt text](img/image-9.png)
@@ -80,13 +82,37 @@
 
 ### Office 365 Outlook: Send an Email (V2)
 ![alt text](img/image-17.png)
+- To: `@{outputs('Update_a_row_-_Idempotency')?['body/Requester Email']}`
+- Subject: `[@{outputs('Update_a_row_-_Idempotency')?['body/Request ID']}] Approval Notification`
+- Body:
+    ```
+    Your Request for @{outputs('Update_a_row_-_Idempotency')?['body/Request Type']} is Approved!
+
+    Approver: @{outputs('Update_a_row_-_Idempotency')?['body/Approver Email']}
+    ```
 - Name Update: `Send an email (V2) - Approved`
 
 ![alt text](img/image-18.png)
+- To: `@{outputs('Update_a_row_-_Idempotency')?['body/Requester Email']}`
+- Subject: `[@{outputs('Update_a_row_-_Idempotency')?['body/Request ID']}] Rejection Notification`
+- Body:
+    ```
+    Your Request for @{outputs('Update_a_row_-_Idempotency')?['body/Request Type']} is Rejected.
+    Please check the comments below:
+    @{items('For_each_1')?['comments']}
+
+    Approver: @{outputs('Update_a_row_-_Idempotency')?['body/Approver Email']}
+    ```
 - Name Update: `Send an email (V2) - Rejected`
+
+### Excel Online (Business): Update a Row
+![alt text](img/image-23.png)
+- Last Updated At: `utcNow()` (insert expression)
+- Name Update: `Update a row - Completion`
 
 ### Test
 ![alt text](img/image-19.png)
 ![alt text](img/image-20.png)
 ![alt text](img/image-21.png)
 ![alt text](img/image-22.png)
+![alt text](img/image-24.png)
