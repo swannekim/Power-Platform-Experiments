@@ -141,10 +141,10 @@
 ## 02. Automated Reporting of Structured Data from Survey
 
 ### 2A.1. Create Cloud Flow: instant cloud flow, manual trigger
-![alt text](img/image-2030.png)
+![alt text](img/image-30.png)
 
 ### 2A.2. Teams: Post adaptive card and wait for a response
-![alt text](img/image-2031.png)
+![alt text](img/image-31.png)
 - Post as: `Flow bot`
 - Post in: `Channel`
 - Message:
