@@ -131,4 +131,6 @@ Power Apps는 더 지능적인 업무 앱으로, Power Automate는 더 복원력
 
 이러한 질문들에 답하기 시작할 때, Power Platform 2026 Release Wave 1은 단순한 업데이트 목록이 아니라, 조직의 AI 전환을 현실적인 업무 시스템으로 구현하는 출발점이 될 수 있습니다.
 
-> published at 2026-04-30 via yooyeun.kim@microsoft.com
+> published at: 2026-04-30 via yooyeun.kim@microsoft.com
+
+> also available at: [ABS Microsoft Korea Blog](https://microsoft.github.io/mwkorea/powerplatform/PowerPlatformWave1/)
