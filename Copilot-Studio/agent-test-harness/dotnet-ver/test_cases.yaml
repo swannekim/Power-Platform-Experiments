@@ -1,0 +1,80 @@
+# =============================================================================
+# test_cases.yaml — your agent's test suite
+# =============================================================================
+# Each case sends one (or more) user messages to the agent and checks the reply.
+# This is where "does the feature actually work?" gets answered, turn by turn.
+#
+# Fields per case:
+#   id          unique short id (shows up in the report)
+#   name        human-readable description
+#   category    free-text group, e.g. "Smoke", "Booking flow", "FAQ", "Fallback"
+#   send        the user message to send  (string)  OR
+#   steps       a multi-turn conversation (list of {send, expect})
+#   expect      assertions on the agent's reply:
+#       contains_any:   passes if ANY of these substrings appear (case-insensitive)
+#       contains_all:   passes if ALL of these substrings appear
+#       not_contains:   fails if ANY of these appear (great for catching fallbacks)
+#       regex:          passes if this regex matches the reply
+#       has_card:       true = a rich card/attachment must be returned
+#       max_response_s: latency budget for this turn (seconds); exceeding it fails
+#   quality (optional): expected_answer + a note, used by the optional LLM judge
+# =============================================================================
+
+- id: smoke-greeting
+  name: Agent greets and offers help
+  category: Smoke
+  send: "hi"
+  expect:
+    contains_any: ["help", "hello", "hi", "assist"]
+    max_response_s: 6
+
+- id: faq-hours
+  name: FAQ — opening hours returns a real answer, not a fallback
+  category: FAQ
+  send: "what are your opening hours?"
+  expect:
+    contains_any: ["open", "hours", "am", "pm", "9", "monday"]
+    not_contains: ["didn't understand", "not sure", "rephrase", "escalate"]
+    max_response_s: 8
+
+- id: feature-card
+  name: Product lookup returns a rich card
+  category: Features
+  send: "show me the premium plan"
+  expect:
+    contains_any: ["premium", "plan"]
+    has_card: true
+    max_response_s: 10
+
+- id: booking-flow
+  name: Multi-turn booking flow completes
+  category: Booking flow
+  steps:
+    - send: "I want to book an appointment"
+      expect:
+        contains_any: ["date", "when", "time"]
+    - send: "next Tuesday at 3pm"
+      expect:
+        contains_any: ["confirm", "booked", "Tuesday", "3"]
+        max_response_s: 10
+
+- id: fallback-graceful
+  name: Out-of-scope question fails over gracefully
+  category: Fallback
+  send: "asldkfj qwpoeiru zxcv"
+  expect:
+    contains_any: ["didn't", "rephrase", "help", "sorry", "not sure"]
+    max_response_s: 8
+
+# --- Optional: answer-quality case scored by an LLM judge (run with --judge)
+- id: quality-refund-policy
+  name: Refund policy answer is accurate and complete
+  category: Quality
+  send: "how do I get a refund?"
+  expect:
+    contains_any: ["refund", "return", "days"]
+  quality:
+    expected_answer: >
+      Refunds are available within 30 days of purchase with a receipt.
+      Items must be unused. Processing takes 5–7 business days.
+    note: "Judge should reward mention of the 30-day window and processing time."

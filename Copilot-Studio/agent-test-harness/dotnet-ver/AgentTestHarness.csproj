@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>AgentTestHarness</RootNamespace>
+    <AssemblyName>AgentTestHarness</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Lets you author test cases in readable YAML. -->
+    <PackageReference Include="YamlDotNet" Version="13.7.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Ensure the suite is next to the built binary too. -->
+    <None Update="test_cases.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

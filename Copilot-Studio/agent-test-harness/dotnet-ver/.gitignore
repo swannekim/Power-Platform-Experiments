@@ -1,0 +1,11 @@
+# Secrets — never commit these
+.env
+*.secret
+
+# .NET build output
+bin/
+obj/
+*.user
+
+# Test artifacts (results.json is committed by CI; ignore locally if you prefer)
+# results.json
