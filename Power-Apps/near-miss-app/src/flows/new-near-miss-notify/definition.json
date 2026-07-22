@@ -1,0 +1,65 @@
+{
+  "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "$connections": { "defaultValue": {}, "type": "Object" },
+    "reviewerEmail": {
+      "defaultValue": "ehs-reviewer@contoso.com",
+      "type": "String",
+      "metadata": { "description": "Bind to an environment variable in the solution." }
+    }
+  },
+  "triggers": {
+    "When_a_near_miss_is_created": {
+      "type": "OpenApiConnectionWebhook",
+      "inputs": {
+        "host": {
+          "connectionName": "shared_commondataserviceforapps",
+          "operationId": "SubscribeWebhookTrigger",
+          "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+        },
+        "parameters": {
+          "subscriptionRequest/message": 1,
+          "subscriptionRequest/entityname": "nm_nearmissreport",
+          "subscriptionRequest/scope": 4
+        }
+      }
+    }
+  },
+  "actions": {
+    "Post_Teams_notification": {
+      "type": "OpenApiConnection",
+      "inputs": {
+        "host": {
+          "connectionName": "shared_teams",
+          "operationId": "PostMessageToConversation",
+          "apiId": "/providers/Microsoft.PowerApps/apis/shared_teams"
+        },
+        "parameters": {
+          "poster": "Flow bot",
+          "location": "Chat with Flow bot",
+          "body/recipient": "@parameters('reviewerEmail')",
+          "body/messageBody": "<b>New near-miss reported:</b> @{triggerOutputs()?['body/nm_name']}<br/>Risk level: @{triggerOutputs()?['body/nm_risklevel@OData.Community.Display.V1.FormattedValue']}<br/>Open it in the EHS app to triage."
+        }
+      },
+      "runAfter": {}
+    },
+    "Create_starter_corrective_action": {
+      "type": "OpenApiConnection",
+      "inputs": {
+        "host": {
+          "connectionName": "shared_commondataserviceforapps",
+          "operationId": "CreateRecord",
+          "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+        },
+        "parameters": {
+          "entityName": "nm_correctiveactions",
+          "item/nm_name": "Review and assign: @{triggerOutputs()?['body/nm_name']}",
+          "item/nm_NearMissReport@odata.bind": "nm_nearmissreports(@{triggerOutputs()?['body/nm_nearmissreportid']})",
+          "item/nm_actionstatus": 100000000
+        }
+      },
+      "runAfter": { "Post_Teams_notification": [ "Succeeded" ] }
+    }
+  }
+}

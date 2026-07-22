@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Solution manifest (unpacked source). Pack with:
+    pac solution pack --zipfile out/NearMissSafety.zip --folder src/solution/src --packagetype Unmanaged
+  Update the Publisher block to match a publisher that exists in your tenant (prefix "nm").
+-->
+<ImportExportXml version="9.2.0.0" SolutionPackageVersion="9.2" languagecode="1033"
+                 generatedBy="ModernisedRebuild" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SolutionManifest>
+    <UniqueName>NearMissSafety</UniqueName>
+    <LocalizedNames>
+      <LocalizedName description="Near-Miss Safety" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="Modernised AI near-miss (hiyari-hatto) safety reporting app." languagecode="1033" />
+    </Descriptions>
+    <Version>1.0.0.0</Version>
+    <Managed>0</Managed>
+    <Publisher>
+      <UniqueName>nmpublisher</UniqueName>
+      <LocalizedNames>
+        <LocalizedName description="Near-Miss Publisher" languagecode="1033" />
+      </LocalizedNames>
+      <CustomizationPrefix>nm</CustomizationPrefix>
+      <CustomizationOptionValuePrefix>10000</CustomizationOptionValuePrefix>
+    </Publisher>
+    <RootComponents>
+      <!-- After you create the tables, pac will populate these RootComponent entries.
+           Global optionsets (type 9) are included below as source. -->
+      <RootComponent type="9" schemaName="nm_category" behavior="0" />
+      <RootComponent type="9" schemaName="nm_hazardtype" behavior="0" />
+      <RootComponent type="9" schemaName="nm_risklevel" behavior="0" />
+      <RootComponent type="9" schemaName="nm_status" behavior="0" />
+      <RootComponent type="9" schemaName="nm_severity" behavior="0" />
+      <RootComponent type="9" schemaName="nm_likelihood" behavior="0" />
+      <RootComponent type="9" schemaName="nm_actionstatus" behavior="0" />
+      <RootComponent type="9" schemaName="nm_language" behavior="0" />
+    </RootComponents>
+    <MissingDependencies />
+  </SolutionManifest>
+</ImportExportXml>

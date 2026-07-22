@@ -1,0 +1,99 @@
+{
+  "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "$connections": { "defaultValue": {}, "type": "Object" },
+    "managerEmail": {
+      "defaultValue": "ehs-manager@contoso.com",
+      "type": "String",
+      "metadata": { "description": "Bind to an environment variable in the solution." }
+    }
+  },
+  "triggers": {
+    "Every_morning_at_08_00_KST": {
+      "type": "Recurrence",
+      "recurrence": {
+        "frequency": "Day",
+        "interval": 1,
+        "schedule": { "hours": [ "8" ], "minutes": [ "0" ] },
+        "timeZone": "Korea Standard Time"
+      }
+    }
+  },
+  "actions": {
+    "List_open_actions_past_due": {
+      "type": "OpenApiConnection",
+      "inputs": {
+        "host": {
+          "connectionName": "shared_commondataserviceforapps",
+          "operationId": "ListRecords",
+          "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+        },
+        "parameters": {
+          "entityName": "nm_correctiveactions",
+          "$filter": "nm_duedate lt @{utcNow('yyyy-MM-dd')} and (nm_actionstatus eq 100000000 or nm_actionstatus eq 100000001)",
+          "$select": "nm_name,nm_duedate,nm_actionstatus",
+          "$expand": "nm_owner($select=internalemailaddress,fullname),nm_NearMissReport($select=nm_name)"
+        }
+      },
+      "runAfter": {}
+    },
+    "For_each_overdue_action": {
+      "type": "Foreach",
+      "foreach": "@outputs('List_open_actions_past_due')?['body/value']",
+      "actions": {
+        "Set_status_to_Overdue": {
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "UpdateRecord",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "entityName": "nm_correctiveactions",
+              "recordId": "@items('For_each_overdue_action')?['nm_correctiveactionid']",
+              "item/nm_actionstatus": 100000003
+            }
+          },
+          "runAfter": {}
+        },
+        "Notify_owner_in_Teams": {
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_teams",
+              "operationId": "PostMessageToConversation",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_teams"
+            },
+            "parameters": {
+              "poster": "Flow bot",
+              "location": "Chat with Flow bot",
+              "body/recipient": "@{coalesce(items('For_each_overdue_action')?['nm_owner']?['internalemailaddress'], parameters('managerEmail'))}",
+              "body/messageBody": "<b>Overdue corrective action</b><br/>Action: @{items('For_each_overdue_action')?['nm_name']}<br/>For near-miss: @{items('For_each_overdue_action')?['nm_NearMissReport']?['nm_name']}<br/>Was due: @{formatDateTime(items('For_each_overdue_action')?['nm_duedate'], 'yyyy-MM-dd')}<br/>Please update it in the EHS app."
+            }
+          },
+          "runAfter": { "Set_status_to_Overdue": [ "Succeeded" ] }
+        }
+      },
+      "runAfter": { "List_open_actions_past_due": [ "Succeeded" ] }
+    },
+    "Notify_manager_of_daily_overdue_count": {
+      "type": "OpenApiConnection",
+      "inputs": {
+        "host": {
+          "connectionName": "shared_teams",
+          "operationId": "PostMessageToConversation",
+          "apiId": "/providers/Microsoft.PowerApps/apis/shared_teams"
+        },
+        "parameters": {
+          "poster": "Flow bot",
+          "location": "Chat with Flow bot",
+          "body/recipient": "@parameters('managerEmail')",
+          "body/messageBody": "<b>Daily overdue check</b><br/>@{length(outputs('List_open_actions_past_due')?['body/value'])} corrective action(s) are now overdue and owners have been notified."
+        }
+      },
+      "runAfter": { "For_each_overdue_action": [ "Succeeded" ] }
+    }
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "$connections": { "defaultValue": {}, "type": "Object" },
+    "teamId": {
+      "defaultValue": "00000000-0000-0000-0000-000000000000",
+      "type": "String",
+      "metadata": { "description": "Target Teams team id — bind to an environment variable." }
+    },
+    "channelId": {
+      "defaultValue": "19:xxxxxxxxxxxxxxxxxxxx@thread.tacv2",
+      "type": "String",
+      "metadata": { "description": "Target safety channel id — bind to an environment variable." }
+    }
+  },
+  "triggers": {
+    "Every_Monday_at_08_00_KST": {
+      "type": "Recurrence",
+      "recurrence": {
+        "frequency": "Week",
+        "interval": 1,
+        "schedule": { "weekDays": [ "Monday" ], "hours": [ "8" ], "minutes": [ "0" ] },
+        "timeZone": "Korea Standard Time"
+      }
+    }
+  },
+  "actions": {
+    "List_new_reports_last_7_days": {
+      "type": "OpenApiConnection",
+      "inputs": {
+        "host": {
+          "connectionName": "shared_commondataserviceforapps",
+          "operationId": "ListRecords",
+          "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+        },
+        "parameters": {
+          "entityName": "nm_nearmissreports",
+          "$filter": "createdon ge @{addDays(utcNow(), -7, 'yyyy-MM-dd')}",
+          "$select": "nm_name,nm_risklevel,nm_category",
+          "$orderby": "createdon desc"
+        }
+      },
+      "runAfter": {}
+    },
+    "List_open_corrective_actions": {
+      "type": "OpenApiConnection",
+      "inputs": {
+        "host": {
+          "connectionName": "shared_commondataserviceforapps",
+          "operationId": "ListRecords",
+          "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+        },
+        "parameters": {
+          "entityName": "nm_correctiveactions",
+          "$filter": "nm_actionstatus eq 100000000 or nm_actionstatus eq 100000001 or nm_actionstatus eq 100000003",
+          "$select": "nm_name,nm_actionstatus,nm_duedate"
+        }
+      },
+      "runAfter": { "List_new_reports_last_7_days": [ "Succeeded" ] }
+    },
+    "Filter_high_or_critical": {
+      "type": "Query",
+      "inputs": {
+        "from": "@outputs('List_new_reports_last_7_days')?['body/value']",
+        "where": "@or(equals(item()?['nm_risklevel'], 100000002), equals(item()?['nm_risklevel'], 100000003))"
+      },
+      "runAfter": { "List_open_corrective_actions": [ "Succeeded" ] }
+    },
+    "Filter_overdue_actions": {
+      "type": "Query",
+      "inputs": {
+        "from": "@outputs('List_open_corrective_actions')?['body/value']",
+        "where": "@equals(item()?['nm_actionstatus'], 100000003)"
+      },
+      "runAfter": { "Filter_high_or_critical": [ "Succeeded" ] }
+    },
+    "Select_new_report_lines": {
+      "type": "Select",
+      "inputs": {
+        "from": "@outputs('List_new_reports_last_7_days')?['body/value']",
+        "select": "&#8226; @{item()?['nm_name']} (@{item()?['nm_risklevel@OData.Community.Display.V1.FormattedValue']})"
+      },
+      "runAfter": { "Filter_overdue_actions": [ "Succeeded" ] }
+    },
+    "Compose_digest": {
+      "type": "Compose",
+      "inputs": "<b>Weekly safety digest</b><br/>New near-misses (7 days): @{length(outputs('List_new_reports_last_7_days')?['body/value'])}<br/>High/Critical among them: @{length(body('Filter_high_or_critical'))}<br/>Open corrective actions: @{length(outputs('List_open_corrective_actions')?['body/value'])}<br/>Overdue actions: @{length(body('Filter_overdue_actions'))}<br/><br/><b>New reports</b><br/>@{join(body('Select_new_report_lines'), '<br/>')}",
+      "runAfter": { "Select_new_report_lines": [ "Succeeded" ] }
+    },
+    "Post_digest_to_safety_channel": {
+      "type": "OpenApiConnection",
+      "inputs": {
+        "host": {
+          "connectionName": "shared_teams",
+          "operationId": "PostMessageToConversation",
+          "apiId": "/providers/Microsoft.PowerApps/apis/shared_teams"
+        },
+        "parameters": {
+          "poster": "Flow bot",
+          "location": "Channel",
+          "body/recipient/groupId": "@parameters('teamId')",
+          "body/recipient/channelId": "@parameters('channelId')",
+          "body/messageBody": "@outputs('Compose_digest')"
+        }
+      },
+      "runAfter": { "Compose_digest": [ "Succeeded" ] }
+    }
+  }
+}

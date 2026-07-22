@@ -1,0 +1,27 @@
+scrAssistant As screen:
+    Fill: =RGBA(247, 249, 252, 1)
+
+    lblTitle As label:
+        Text: =L("ask")
+        Size: =20
+        FontWeight: =FontWeight.Semibold
+        X: =24
+        Y: =40
+
+    lblHelp As label:
+        Text: ="Ask e.g. \"What should I watch out for when using a forklift at Site B?\" — answers are grounded in past reports."
+        Size: =12
+        Color: =RGBA(89, 89, 89, 1)
+        X: =24
+        Y: =76
+        Width: =Parent.Width - 48
+
+    # Insert the Copilot Studio agent here:
+    #   Studio → Insert → AI → "Copilot Studio agent" (or the classic 'Chatbot' control),
+    #   then select the published "Safety Assistant" agent (see src/copilot-studio/agent-setup.md).
+    ctlAgent As group:
+        X: =16
+        Y: =120
+        Width: =Parent.Width - 32
+        Height: =Parent.Height - 140
+        # → bind to the published Safety Assistant agent

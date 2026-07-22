@@ -1,0 +1,50 @@
+scrHome As screen:
+    Fill: =RGBA(247, 249, 252, 1)
+
+    recHeader As rectangle:
+        Fill: =gblTheme.primary
+        Height: =160
+        Width: =Parent.Width
+        X: =0
+        Y: =0
+
+    lblTitle As label:
+        Text: ="Near-Miss Safety"
+        Color: =RGBA(255, 255, 255, 1)
+        Size: =22
+        FontWeight: =FontWeight.Semibold
+        X: =24
+        Y: =60
+
+    btnReport As button:
+        Text: =L("reportTitle")
+        OnSelect: |
+            =NewForm(frmReport); Navigate(scrReport, ScreenTransition.Cover)
+        Fill: =gblTheme.accent
+        Width: =Parent.Width - 48
+        Height: =88
+        X: =24
+        Y: =200
+
+    btnMyReports As button:
+        Text: =L("myReports")
+        OnSelect: =Navigate(scrMyReports, ScreenTransition.Cover)
+        Width: =Parent.Width - 48
+        Height: =72
+        X: =24
+        Y: =308
+
+    btnAssistant As button:
+        Text: =L("ask")
+        OnSelect: =Navigate(scrAssistant, ScreenTransition.Cover)
+        Width: =Parent.Width - 48
+        Height: =72
+        X: =24
+        Y: =396
+
+    galRecent As gallery:
+        # Recent reports across the site (read-only glance)
+        Items: =FirstN(Sort('Near-Miss Reports', 'Observed on', Descending), 5)
+        X: =24
+        Y: =492
+        Width: =Parent.Width - 48

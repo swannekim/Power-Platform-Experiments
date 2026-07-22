@@ -1,0 +1,80 @@
+scrReport As screen:
+    Fill: =RGBA(247, 249, 252, 1)
+
+    frmReport As form:
+        DataSource: ='Near-Miss Reports'
+        # Fields shown: Title, Description, Observed on, Site, Category, HazardType,
+        # Severity, Likelihood, RiskLevel, ImmediateActionTaken, Photo
+        Item: =Defaults('Near-Miss Reports')
+        X: =0
+        Y: =72
+        Width: =Parent.Width
+
+    # --- input controls referenced by the AI + submit logic ---
+    txtDescription As text:            # multiline; the reporter's own words
+        Mode: =TextMode.MultiLine
+        HintText: ="Describe what happened…"
+
+    drpSeverity As dropdown:
+        Items: =["1","2","3","4","5"]
+
+    drpLikelihood As dropdown:
+        Items: =["1","2","3","4","5"]
+
+    # --- AI assist: runs all three prompts, writes editable drafts ---
+    btnAssist As button:
+        Text: =L("assist")
+        DisplayMode: =If(Len(txtDescription.Text) > 10, DisplayMode.Edit, DisplayMode.Disabled)
+        OnSelect: |
+            =UpdateContext({ ctxBusy: true });
+            // 1) classify
+            Set(varClassify, 'Classify near-miss'.Predict({ incidentDescription: txtDescription.Text }));
+            UpdateContext({ ctxCategory: varClassify.Text });
+            // 2) risk (uses reporter's severity/likelihood if set)
+            Set(varRisk, 'Assess risk'.Predict({
+                    description: txtDescription.Text,
+                    severity:   Coalesce(drpSeverity.Selected.Value, "3"),
+                    likelihood: Coalesce(drpLikelihood.Selected.Value, "3") }));
+            UpdateContext({ ctxRisk: varRisk.Text });
+            // 3) similar incidents → countermeasures
+            Set(varSimilar,
+                Concat(
+                    FirstN(Sort(Filter('Near-Miss Reports', Category.Value = ctxCategory),
+                                'Observed on', Descending), 5),
+                    Title & ": " & 'Immediate action taken' & Char(10)));
+            Set(varCounter, 'Suggest countermeasures'.Predict({
+                    incidentDescription: txtDescription.Text,
+                    similarIncidents:    varSimilar }));
+            UpdateContext({ ctxCountermeasure: varCounter.Text });
+            UpdateContext({ ctxBusy: false })
+
+    spnBusy As spinner:
+        Visible: =ctxBusy
+
+    # --- editable AI drafts (human confirms before save) ---
+    txtCategoryDraft As text:
+        Default: =ctxCategory
+    txtRiskDraft As text:
+        Default: =ctxRisk
+    txtCountermeasureDraft As text:
+        Mode: =TextMode.MultiLine
+        Default: =ctxCountermeasure
+
+    lblSimilar As label:
+        Text: ="Similar past incidents shown above are advisory — confirm or edit the drafts."
+        Size: =11
+        Color: =RGBA(89, 89, 89, 1)
+
+    btnSubmit As button:
+        Text: =L("submit")
+        OnSelect: |
+            =SubmitForm(frmReport)
+        DisplayMode: =If(frmReport.Valid, DisplayMode.Edit, DisplayMode.Disabled)
+
+    # After a successful save: default Reporter + Status, then return home.
+    # (frmReport.OnSuccess)
+    #   Patch('Near-Miss Reports', frmReport.LastSubmit,
+    #         { Reporter: gblUser, Status: 'Status (Near-Miss Reports)'.New,
+    #           Language: gblLang });
+    #   Notify("Report submitted. Thank you.", NotificationType.Success);
+    #   Navigate(scrHome, ScreenTransition.UnCover)

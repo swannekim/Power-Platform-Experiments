@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Unpacked customizations. The global choices (optionsets) below are ready to pack + import.
+  Entity (table) XML is intentionally NOT hand-authored here: create the three tables in Studio
+  per ../schema.md, then run `pac solution export` + `pac solution unpack` to capture the full,
+  valid <Entities> block into this file. Hand-written entity XML rarely imports cleanly.
+-->
+<ImportExportXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Entities>
+    <!-- populated by pac solution unpack after the tables exist -->
+  </Entities>
+  <Roles />
+  <Workflows />
+  <FieldSecurityProfiles />
+  <Templates />
+  <EntityMaps />
+  <EntityRelationships />
+  <OrganizationSettings />
+  <optionsets>
+
+    <optionset Name="nm_category" OptionSetType="picklist" IsCustomizable="1" IsGlobal="1">
+      <displaynames><displayname description="Category" languagecode="1033" /></displaynames>
+      <options>
+        <option value="100000000"><labels><label description="Slip/Trip/Fall" languagecode="1033" /></labels></option>
+        <option value="100000001"><labels><label description="Struck-by" languagecode="1033" /></labels></option>
+        <option value="100000002"><labels><label description="Caught-in" languagecode="1033" /></labels></option>
+        <option value="100000003"><labels><label description="Ergonomic" languagecode="1033" /></labels></option>
+        <option value="100000004"><labels><label description="Chemical" languagecode="1033" /></labels></option>
+        <option value="100000005"><labels><label description="Electrical" languagecode="1033" /></labels></option>
+        <option value="100000006"><labels><label description="Fire/Explosion" languagecode="1033" /></labels></option>
+        <option value="100000007"><labels><label description="Vehicle" languagecode="1033" /></labels></option>
+        <option value="100000008"><labels><label description="Environmental" languagecode="1033" /></labels></option>
+        <option value="100000009"><labels><label description="Other" languagecode="1033" /></labels></option>
+      </options>
+    </optionset>
+
+    <optionset Name="nm_hazardtype" OptionSetType="picklist" IsCustomizable="1" IsGlobal="1">
+      <displaynames><displayname description="Hazard type" languagecode="1033" /></displaynames>
+      <options>
+        <option value="100000000"><labels><label description="Working at height" languagecode="1033" /></labels></option>
+        <option value="100000001"><labels><label description="Moving machinery" languagecode="1033" /></labels></option>
+        <option value="100000002"><labels><label description="Manual handling" languagecode="1033" /></labels></option>
+        <option value="100000003"><labels><label description="Hazardous substance" languagecode="1033" /></labels></option>
+        <option value="100000004"><labels><label description="Electrical" languagecode="1033" /></labels></option>
+        <option value="100000005"><labels><label description="Housekeeping" languagecode="1033" /></labels></option>
+        <option value="100000006"><labels><label description="Other" languagecode="1033" /></labels></option>
+      </options>
+    </optionset>
+
+    <optionset Name="nm_risklevel" OptionSetType="picklist" IsCustomizable="1" IsGlobal="1">
+      <displaynames><displayname description="Risk level" languagecode="1033" /></displaynames>
+      <options>
+        <option value="100000000"><labels><label description="Low" languagecode="1033" /></labels></option>
+        <option value="100000001"><labels><label description="Medium" languagecode="1033" /></labels></option>
+        <option value="100000002"><labels><label description="High" languagecode="1033" /></labels></option>
+        <option value="100000003"><labels><label description="Critical" languagecode="1033" /></labels></option>
+      </options>
+    </optionset>
+
+    <optionset Name="nm_status" OptionSetType="picklist" IsCustomizable="1" IsGlobal="1">
+      <displaynames><displayname description="Status" languagecode="1033" /></displaynames>
+      <options>
+        <option value="100000000"><labels><label description="New" languagecode="1033" /></labels></option>
+        <option value="100000001"><labels><label description="Under review" languagecode="1033" /></labels></option>
+        <option value="100000002"><labels><label description="Actioned" languagecode="1033" /></labels></option>
+        <option value="100000003"><labels><label description="Closed" languagecode="1033" /></labels></option>
+      </options>
+    </optionset>
+
+    <optionset Name="nm_severity" OptionSetType="picklist" IsCustomizable="1" IsGlobal="1">
+      <displaynames><displayname description="Severity" languagecode="1033" /></displaynames>
+      <options>
+        <option value="1"><labels><label description="1 - Negligible" languagecode="1033" /></labels></option>
+        <option value="2"><labels><label description="2 - Minor" languagecode="1033" /></labels></option>
+        <option value="3"><labels><label description="3 - Moderate" languagecode="1033" /></labels></option>
+        <option value="4"><labels><label description="4 - Major" languagecode="1033" /></labels></option>
+        <option value="5"><labels><label description="5 - Catastrophic" languagecode="1033" /></labels></option>
+      </options>
+    </optionset>
+
+    <optionset Name="nm_likelihood" OptionSetType="picklist" IsCustomizable="1" IsGlobal="1">
+      <displaynames><displayname description="Likelihood" languagecode="1033" /></displaynames>
+      <options>
+        <option value="1"><labels><label description="1 - Rare" languagecode="1033" /></labels></option>
+        <option value="2"><labels><label description="2 - Unlikely" languagecode="1033" /></labels></option>
+        <option value="3"><labels><label description="3 - Possible" languagecode="1033" /></labels></option>
+        <option value="4"><labels><label description="4 - Likely" languagecode="1033" /></labels></option>
+        <option value="5"><labels><label description="5 - Almost certain" languagecode="1033" /></labels></option>
+      </options>
+    </optionset>
+
+    <optionset Name="nm_actionstatus" OptionSetType="picklist" IsCustomizable="1" IsGlobal="1">
+      <displaynames><displayname description="Action status" languagecode="1033" /></displaynames>
+      <options>
+        <option value="100000000"><labels><label description="Open" languagecode="1033" /></labels></option>
+        <option value="100000001"><labels><label description="In progress" languagecode="1033" /></labels></option>
+        <option value="100000002"><labels><label description="Done" languagecode="1033" /></labels></option>
+        <option value="100000003"><labels><label description="Overdue" languagecode="1033" /></labels></option>
+      </options>
+    </optionset>
+
+    <optionset Name="nm_language" OptionSetType="picklist" IsCustomizable="1" IsGlobal="1">
+      <displaynames><displayname description="Language" languagecode="1033" /></displaynames>
+      <options>
+        <option value="100000000"><labels><label description="Korean" languagecode="1033" /></labels></option>
+        <option value="100000001"><labels><label description="English" languagecode="1033" /></labels></option>
+        <option value="100000002"><labels><label description="Japanese" languagecode="1033" /></labels></option>
+      </options>
+    </optionset>
+
+  </optionsets>
+  <SolutionPackageVersion>9.2</SolutionPackageVersion>
+</ImportExportXml>

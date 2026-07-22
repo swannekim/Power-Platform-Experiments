@@ -1,0 +1,30 @@
+App:
+    # Detect the user's language once; default to English if unknown.
+    OnStart: |
+        =Set(
+            gblLang,
+            Switch(
+                Left(Language(), 2),
+                "ko", "Korean",
+                "ja", "Japanese",
+                "English"
+            )
+        );
+        Set(gblUser, User());
+        // UI label dictionary (extend as needed) keyed by language.
+        ClearCollect(
+            colLabels,
+            { key: "reportTitle",  Korean: "아차사고 보고",  English: "Report a near-miss", Japanese: "ヒヤリハット報告" },
+            { key: "assist",       Korean: "AI 지원",       English: "Assist with AI",     Japanese: "AI で支援" },
+            { key: "submit",       Korean: "제출",           English: "Submit",             Japanese: "送信" },
+            { key: "myReports",    Korean: "내 보고 내역",    English: "My reports",         Japanese: "自分の報告" },
+            { key: "ask",          Korean: "안전 도우미에게 질문", English: "Ask the safety assistant", Japanese: "安全アシスタントに質問" }
+        );
+        Set(gblTheme, { primary: RGBA(31, 78, 121, 1), accent: RGBA(46, 117, 182, 1) });
+
+    # Helper: L("key") returns the label in the current language.
+    Formulas: |
+        =L(key: Text): Text =
+            LookUp(colLabels, key = key).English;   // swap .English for a Switch on gblLang in Studio
+
+    StartScreen: =scrHome

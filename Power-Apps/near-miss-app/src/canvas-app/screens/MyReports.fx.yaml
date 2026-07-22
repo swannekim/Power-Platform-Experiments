@@ -1,0 +1,35 @@
+scrMyReports As screen:
+    Fill: =RGBA(247, 249, 252, 1)
+
+    lblTitle As label:
+        Text: =L("myReports")
+        Size: =20
+        FontWeight: =FontWeight.Semibold
+        X: =24
+        Y: =40
+
+    galMine As gallery:
+        # The reporter's own history, newest first.
+        Items: |
+            =Sort(
+                Filter('Near-Miss Reports', Reporter.'Primary Email' = gblUser.Email),
+                'Observed on', Descending
+            )
+        X: =16
+        Y: =96
+        Width: =Parent.Width - 32
+        TemplateSize: =120
+
+        lblItemTitle As label:
+            Text: =ThisItem.Title
+            FontWeight: =FontWeight.Semibold
+
+        lblItemMeta As label:
+            Text: =ThisItem.Category.Value & " • " & ThisItem.'Risk level'.Value & " • " & ThisItem.Status.Value
+
+        lblItemDate As label:
+            Text: =Text(ThisItem.'Observed on', "[$-en-US]yyyy-mm-dd hh:mm")
+
+    lblEmpty As label:
+        Text: ="No reports yet."
+        Visible: =CountRows(galMine.AllItems) = 0
