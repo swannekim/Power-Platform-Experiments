@@ -230,6 +230,8 @@ copilot
 **모든 Copilot CLI와 VS Code 창을 닫고** 다시 시도하세요. 그래도 안 되면 손을 들어주세요.
 </details>
 
+![alt text](img/image.png)
+
 ## 1.7 `setup` skill 실행
 
 ```
@@ -369,7 +371,7 @@ trigger? Give me the exact operation ID. Do not guess.
 
 ## 3.1 비즈니스 상황
 
-모든 IT 팀에는 접수 리스트가 있습니다. 진짜 일은 티켓 자체가 아니라 **뒤치다꺼리**입니다.
+모든 IT 팀에는 접수 리스트가 있습니다. 진짜 일은 티켓 자체가 아니라 **그 이외의 행정처리**입니다.
 담당자 배정, 담당자 독촉, SLA 임박 감지, 관리자 에스컬레이션. 이 flow는 그 네 가지를 모두
 수행하며, 절대 잊어버리지 않습니다.
 
@@ -417,6 +419,11 @@ SCOPE "Handle failure"  runs only if Triage failed or timed out
 >
 > 이 문제는 원래 실습 설계안에 그대로 있었고, 실제로 만들어보고 나서야 발견됐습니다. 아래
 > prompt처럼 병렬 버전을 요청하세요.
+
+![alt text](img/image-1.png)
+![alt text](img/image-2.png)
+![alt text](img/image-3.png)
+![alt text](img/image-4.png)
 
 ## 3.4 Prompt 사다리
 
@@ -633,6 +640,9 @@ history? Show me its columns.
 이 방식이 원래 설계보다 *더 낫습니다.* *list flows → 각 flow마다 → 실행 목록 조회* 라는 N+1 패턴
 대신, 서버에서 필터링되는 단일 조회 한 번이면 됩니다. N+1 패턴은 flow가 500개가 되면 무너집니다.
 
+![alt text](img/image-5.png)
+![alt text](img/image-6.png)
+
 ## 5.4 Prompt 사다리
 
 ### Prompt 1 — 뼈대
@@ -765,6 +775,12 @@ in Flow-Health-Log.
 - flow에서 **Entra에 쓰기** — 실제로 검증 가능한 상태 변경
 - **기한이 있는 접근 권한과 자동 회수** — 실질적인 컴플라이언스 이점
 - **파라미터의 이름이 곧 규약은 아니라는 점** — 오늘 가장 날카로운 교훈
+
+![alt text](img/image-7.png)
+![alt text](img/image-8.png)
+![alt text](img/image-9.png)
+![alt text](img/image-10.png)
+![alt text](img/image-11.png)
 
 ## 6.3 Prompt 사다리
 

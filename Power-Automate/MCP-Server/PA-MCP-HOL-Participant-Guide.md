@@ -226,6 +226,8 @@ on `~/.copilot/installed-plugins/`.
 **Close every Copilot CLI and VS Code window**, then retry. Raise a hand if it persists.
 </details>
 
+![alt text](img/image.png)
+
 ## 1.7 Run the `setup` skill
 
 ```
@@ -413,6 +415,11 @@ SCOPE "Handle failure"  runs only if Triage failed or timed out
 >
 > This was in the original lab design and was only caught by building it. Ask the agent for the
 > parallel version, as the prompts below do.
+
+![alt text](img/image-1.png)
+![alt text](img/image-2.png)
+![alt text](img/image-3.png)
+![alt text](img/image-4.png)
 
 ## 3.4 The prompt ladder
 
@@ -630,6 +637,9 @@ history? Show me its columns.
 This is *better* than the original design: one flat, server-filtered query instead of
 *list flows → for each flow → list its runs*, an N+1 pattern that falls over at 500 flows.
 
+![alt text](img/image-5.png)
+![alt text](img/image-6.png)
+
 ## 5.4 The prompt ladder
 
 ### Prompt 1 — the spine
@@ -763,6 +773,12 @@ the loop and **auto-revokes**.
 - **Writing to Entra** from a flow, with a real, verifiable state change
 - **Time-bound access with automatic revocation** — a genuine compliance win
 - **That a parameter's name is not its contract** — the sharpest lesson of the day
+
+![alt text](img/image-7.png)
+![alt text](img/image-8.png)
+![alt text](img/image-9.png)
+![alt text](img/image-10.png)
+![alt text](img/image-11.png)
 
 ## 6.3 The prompt ladder
 
