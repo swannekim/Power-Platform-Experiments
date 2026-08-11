@@ -1,0 +1,7 @@
+# Local-only material. Never publish these directories, including sanitized copies.
+/personal-resources/
+/session-history/
+
+# Keep workbooks local except for the participant-facing demo data template.
+*.xlsx
+!/lab-resources/PA-HOL-Demo-Data-Pack-TEMPLATE.xlsx
