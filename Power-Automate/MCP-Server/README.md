@@ -2,7 +2,7 @@
 
 This folder contains the participant materials and reference packages for an L300–400
 hands-on lab on building Power Automate cloud flows with GitHub Copilot CLI and the
-[FlowAgent MCP server](https://github.com/microsoft/power-platform-skills/tree/main/plugins/power-automate#skills).
+[FlowAgent MCP server](https://github.com/microsoft/power-platform-skills/tree/main/plugins/power-automate).
 
 ## Start here
 

@@ -5,3 +5,10 @@
 # Keep workbooks local except for the participant-facing demo data template.
 *.xlsx
 !/lab-resources/PA-HOL-Demo-Data-Pack-TEMPLATE.xlsx
+
+# Raw solution exports straight out of Power Automate. These embed real
+# SharePoint site URLs, list GUIDs and Teams group/channel IDs from the
+# authoring tenant. Only sanitized copies belong in /sample-pa-flows/.
+/personal-resources/original-solution-zips/
+*-UNSANITIZED.zip
+*-raw-export.zip
