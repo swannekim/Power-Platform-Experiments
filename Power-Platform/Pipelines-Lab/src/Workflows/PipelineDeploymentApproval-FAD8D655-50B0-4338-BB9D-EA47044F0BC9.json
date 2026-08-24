@@ -1,0 +1,156 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_commondataserviceforapps": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "clab_sharedcommondataserviceforapps"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        }
+      },
+      "shared_approvals": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "clab_sharedapprovals"
+        },
+        "api": {
+          "name": "shared_approvals"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        }
+      },
+      "triggers": {
+        "When_a_pipeline_pre-deployment_step_starts": {
+          "metadata": {
+            "operationMetadataId": "1a2b3c4d-0001-4000-8000-000000000001"
+          },
+          "type": "OpenApiConnectionWebhook",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "BusinessEventsTrigger",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "catalog": "commoncatalog",
+              "category": "powerplatformpipelines",
+              "subscriptionRequest/entityname": "none",
+              "subscriptionRequest/sdkmessagename": "OnPreDeploymentStarted"
+            },
+            "authentication": "@parameters('$authentication')"
+          },
+          "description": "Fires when a pipeline stage that has 'Pre-Deployment Step Required' enabled reaches the pre-deployment step. The deployment is paused until this flow calls UpdatePreDeploymentStepStatus."
+        }
+      },
+      "actions": {
+        "Start_and_wait_for_a_deployment_approval": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "1a2b3c4d-0002-4000-8000-000000000002"
+          },
+          "type": "OpenApiConnectionWebhook",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_approvals",
+              "operationId": "StartAndWaitForAnApproval",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_approvals"
+            },
+            "parameters": {
+              "approvalType": "Basic",
+              "WebhookApprovalCreationInput/title": "Approve deployment of '@{triggerOutputs()?['body/OutputParameters/ArtifactName']}' to @{triggerOutputs()?['body/OutputParameters/DeploymentStageName']}",
+              "WebhookApprovalCreationInput/assignedTo": "approver@contoso.com",
+              "WebhookApprovalCreationInput/details": "A Power Platform Pipelines deployment is waiting for your approval.\n\n| Field | Value |\n| --- | --- |\n| **Pipeline** | @{triggerOutputs()?['body/OutputParameters/DeploymentPipelineName']} |\n| **Stage** | @{triggerOutputs()?['body/OutputParameters/DeploymentStageName']} |\n| **Solution** | @{triggerOutputs()?['body/OutputParameters/ArtifactName']} |\n| **Version** | @{triggerOutputs()?['body/OutputParameters/SolutionArtifactVersion']} |\n| **Requested by** | @{triggerOutputs()?['body/OutputParameters/DeployAsUser']} |\n| **Scheduled** | @{if(empty(triggerOutputs()?['body/OutputParameters/ScheduledTime']), 'Immediately', triggerOutputs()?['body/OutputParameters/ScheduledTime'])} |\n| **Deployment notes** | @{triggerOutputs()?['body/OutputParameters/DeploymentNotes']} |\n\n**Approve** to let the deployment continue, or **Reject** to stop it. Anything you type in the comments box is shown back to the maker in the pipeline run history.",
+              "WebhookApprovalCreationInput/itemLink": "@triggerOutputs()?['body/OutputParameters/StageRunDetailsLink']",
+              "WebhookApprovalCreationInput/itemLinkDescription": "Open the pipeline stage run"
+            },
+            "authentication": "@parameters('$authentication')"
+          },
+          "description": "Sends an Approve/Reject request to the pipeline administrator and pauses until they respond."
+        },
+        "Check_the_approval_outcome": {
+          "runAfter": {
+            "Start_and_wait_for_a_deployment_approval": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "1a2b3c4d-0003-4000-8000-000000000003"
+          },
+          "type": "If",
+          "expression": {
+            "equals": [
+              "@outputs('Start_and_wait_for_a_deployment_approval')?['body/outcome']",
+              "Approve"
+            ]
+          },
+          "actions": {
+            "Approve_the_deployment": {
+              "runAfter": {},
+              "metadata": {
+                "operationMetadataId": "1a2b3c4d-0004-4000-8000-000000000004"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_commondataserviceforapps",
+                  "operationId": "PerformUnboundAction",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                },
+                "parameters": {
+                  "actionName": "UpdatePreDeploymentStepStatus",
+                  "item/StageRunId": "@triggerOutputs()?['body/InputParameters/StageRunId']",
+                  "item/PreDeploymentStepStatus": 20,
+                  "item/Comments": "Approved by @{outputs('Start_and_wait_for_a_deployment_approval')?['body/responses'][0]?['responder']?['displayName']}. Comment: @{outputs('Start_and_wait_for_a_deployment_approval')?['body/responses'][0]?['comments']}"
+                },
+                "authentication": "@parameters('$authentication')"
+              },
+              "description": "PreDeploymentStepStatus 20 = Completed. Releases the pipeline so the solution is imported into the target environment."
+            }
+          },
+          "else": {
+            "actions": {
+              "Reject_the_deployment": {
+                "runAfter": {},
+                "metadata": {
+                  "operationMetadataId": "1a2b3c4d-0005-4000-8000-000000000005"
+                },
+                "type": "OpenApiConnection",
+                "inputs": {
+                  "host": {
+                    "connectionName": "shared_commondataserviceforapps",
+                    "operationId": "PerformUnboundAction",
+                    "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                  },
+                  "parameters": {
+                    "actionName": "UpdatePreDeploymentStepStatus",
+                    "item/StageRunId": "@triggerOutputs()?['body/InputParameters/StageRunId']",
+                    "item/PreDeploymentStepStatus": 30,
+                    "item/Comments": "Rejected by @{outputs('Start_and_wait_for_a_deployment_approval')?['body/responses'][0]?['responder']?['displayName']}. Reason: @{outputs('Start_and_wait_for_a_deployment_approval')?['body/responses'][0]?['comments']}"
+                  },
+                  "authentication": "@parameters('$authentication')"
+                },
+                "description": "PreDeploymentStepStatus 30 = Failed. Stops the pipeline; the solution is NOT imported."
+              }
+            }
+          }
+        }
+      }
+    },
+    "templateName": ""
+  },
+  "schemaVersion": "1.0.0.0"
+}
