@@ -323,6 +323,8 @@ Set these four fields **exactly**:
 
 > ⚠️ Set **Catalog** and **Category** first. **Action name** stays empty until both are chosen.
 
+![The trigger configured with Catalog, Category, Table name and Action name.](img/02-trigger-config.png)
+
 <details>
 <summary>Underlying JSON (for reference)</summary>
 
@@ -376,6 +378,8 @@ A Power Platform Pipelines deployment is waiting for your approval.
 
 > 💡 You can pick all of these from the **dynamic content** panel instead of typing expressions.
 
+![Start and wait for an approval, configured with the approval type, title, approver and details.](img/03-approval-action.png)
+
 ### 6d. Add the condition
 
 **+ New step** → **Condition**.
@@ -402,6 +406,8 @@ Inside **If yes**: **Add an action** → **Microsoft Dataverse** → **Perform a
 > 🔥 **The #1 gotcha:** `StageRunId` comes from **`InputParameters`**, *not* `OutputParameters`. Every other field on this trigger comes from `OutputParameters`. Get this wrong and the action fails with a missing‑parameter error.
 
 > 💡 After selecting the **Action Name**, the `StageRunId`, `PreDeploymentStepStatus` and `Comments` fields appear. If you don't see them, expand **Show advanced options**.
+
+![Perform an unbound action — UpdatePreDeploymentStepStatus with PreDeploymentStepStatus set to 20.](img/04-unbound-action-approve.png)
 
 ### 6f. If no → block the deployment
 
@@ -431,6 +437,8 @@ flowchart TD
     E --> G["⛔ Deployment stops<br/>Nothing imported"]
 ```
 
+![The finished flow: trigger, approval, condition, and the two UpdatePreDeploymentStepStatus calls.](img/01-flow-overview.png)
+
 > ✅ **Checkpoint:** flow is **On**, lives in the **host**, and both branches call `UpdatePreDeploymentStepStatus`.
 
 ---
@@ -450,6 +458,8 @@ flowchart TD
 5. Select **Deploy here** → **Next**.
 6. Wait for validation to finish, then select **Deploy**.
 
+![The Pipelines tab on the solution. The notice under the stage confirms the approval gate is armed.](img/06-pipeline-deploy-here.png)
+
 ### 7b. Observe the pause
 
 The stage run is now at **pre‑deployment status `10` (Pending)** and **nothing has been imported yet**. Select **View deployments** to see it waiting.
@@ -463,6 +473,8 @@ The stage run is now at **pre‑deployment status `10` (Pending)** and **nothing
 5. Set **Choose your response** to **Approve**, type a comment such as
    `Approved for production release. Verified solution version and components.`
 6. Select **Confirm**.
+
+![The approval request as the administrator sees it, with pipeline, stage, solution and version.](img/07-approval-request.png)
 
 > 💡 The same request also arrives by email and in the Teams **Approvals** app — the admin can approve from any of them.
 
@@ -523,6 +535,8 @@ In **`test-sand-2608`** → **Solutions** → select **Pipeline Demo Solution** 
 3. Select **Next** → choose **Unmanaged** → **Export**.
 4. The `.zip` downloads.
 
+![Export this solution — choose Managed or Unmanaged.](img/08-export-solution.png)
+
 ### 9b. Export managed (the deployable artifact)
 
 Repeat, choosing **Managed** at the version step.
@@ -576,6 +590,8 @@ To skip Step 6 entirely, import the provided solution instead.
    - **Turn the flow on** — imported flows arrive **off**.
 
 > ✅ **Checkpoint:** flow is On, both connection references are bound, and the approver email is yours.
+
+![Both connection references bound to Connected connections in the host environment.](img/05-connections.png)
 
 ---
 
@@ -659,6 +675,8 @@ With several pipelines in one host, restrict the flow so it only runs for the ri
 | Approvals database provisioned? | The first approval flow in a non‑default environment must be run by an environment admin. |
 
 > 🚑 **Rescue a stuck deployment:** fix the flow, then open the failed run in Power Automate and select **Resubmit**. It replays with the original trigger payload and issues a fresh approval.
+
+![Flow run history in Power Automate. Use Resubmit on a failed run to replay it.](img/09-flow-run-history.png)
 
 ### Flow fails: `property 'approver/displayName' doesn't exist`
 

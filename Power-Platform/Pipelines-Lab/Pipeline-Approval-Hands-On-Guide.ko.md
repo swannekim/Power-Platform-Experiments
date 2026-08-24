@@ -323,6 +323,8 @@ sequenceDiagram
 
 > ⚠️ **Catalog** 와 **Category** 를 먼저 설정하세요. 둘 다 선택하기 전까지 **Action name** 은 비어 있습니다.
 
+![Catalog, Category, Table name, Action name 이 설정된 트리거.](img/02-trigger-config.png)
+
 <details>
 <summary>내부 JSON (참고용)</summary>
 
@@ -376,6 +378,8 @@ Power Platform Pipelines 배포가 승인을 기다리고 있습니다.
 
 > 💡 위 식들은 직접 입력하는 대신 **동적 콘텐츠(dynamic content)** 패널에서 모두 선택할 수도 있습니다.
 
+![승인 유형, 제목, 승인자, 세부 정보가 설정된 Start and wait for an approval 작업.](img/03-approval-action.png)
+
 ### 6d. 조건 추가
 
 **+ New step** → **Condition**.
@@ -402,6 +406,8 @@ Power Platform Pipelines 배포가 승인을 기다리고 있습니다.
 > 🔥 **가장 흔한 실수 1위:** `StageRunId` 는 **`InputParameters`** 에서 가져옵니다. `OutputParameters` 가 *아닙니다*. 이 트리거의 다른 모든 필드는 `OutputParameters` 에서 옵니다. 이걸 틀리면 매개변수 누락 오류로 작업이 실패합니다.
 
 > 💡 **Action Name** 을 선택하면 `StageRunId`, `PreDeploymentStepStatus`, `Comments` 필드가 나타납니다. 보이지 않으면 **Show advanced options** 를 펼치세요.
+
+![Perform an unbound action — PreDeploymentStepStatus 를 20 으로 설정한 UpdatePreDeploymentStepStatus.](img/04-unbound-action-approve.png)
 
 ### 6f. If no → 배포 차단
 
@@ -431,6 +437,8 @@ flowchart TD
     E --> G["⛔ 배포 중단<br/>아무것도 가져오지 않음"]
 ```
 
+![완성된 플로우: 트리거, 승인, 조건, 그리고 두 개의 UpdatePreDeploymentStepStatus 호출.](img/01-flow-overview.png)
+
 > ✅ **체크포인트:** 플로우가 **On** 상태이고, **호스트**에 있으며, 두 분기 모두 `UpdatePreDeploymentStepStatus` 를 호출합니다.
 
 ---
@@ -450,6 +458,8 @@ flowchart TD
 5. **Deploy here** → **Next** 를 선택합니다.
 6. 유효성 검사가 끝날 때까지 기다린 뒤 **Deploy** 를 선택합니다.
 
+![솔루션의 Pipelines 탭. 스테이지 아래 안내 문구가 승인 게이트가 활성화되어 있음을 보여줍니다.](img/06-pipeline-deploy-here.png)
+
 ### 7b. 일시 중지 확인
 
 스테이지 실행은 이제 **배포 전 단계 상태 `10` (Pending)** 이며 **아직 아무것도 가져오기 되지 않았습니다**. **View deployments** 를 선택하면 대기 중인 상태를 볼 수 있습니다.
@@ -463,6 +473,8 @@ flowchart TD
 5. **Choose your response** 를 **Approve** 로 설정하고 다음과 같은 댓글을 입력합니다
    `Approved for production release. Verified solution version and components.`
 6. **Confirm** 을 선택합니다.
+
+![관리자에게 보이는 승인 요청 화면. 파이프라인, 스테이지, 솔루션, 버전이 표시됩니다.](img/07-approval-request.png)
 
 > 💡 동일한 요청은 이메일과 Teams **Approvals** 앱으로도 전달됩니다 — 관리자는 그중 아무 곳에서나 승인할 수 있습니다.
 
@@ -523,6 +535,8 @@ flowchart TD
 3. **Next** → **Unmanaged** 선택 → **Export**.
 4. `.zip` 파일이 다운로드됩니다.
 
+![Export this solution — Managed 또는 Unmanaged 를 선택합니다.](img/08-export-solution.png)
+
 ### 9b. Managed 내보내기 (배포용 아티팩트)
 
 동일하게 반복하되 버전 단계에서 **Managed** 를 선택합니다.
@@ -576,6 +590,8 @@ Step 6 을 통째로 건너뛰려면, 제공된 솔루션을 가져오면 됩니
    - **플로우를 켜세요** — 가져온 플로우는 **꺼진** 상태로 들어옵니다.
 
 > ✅ **체크포인트:** 플로우가 On 상태이고, 연결 참조 2개가 모두 바인딩되었으며, 승인자 이메일이 여러분의 것입니다.
+
+![호스트 환경에서 두 연결 참조가 모두 Connected 상태의 연결에 바인딩된 모습.](img/05-connections.png)
 
 ---
 
@@ -659,6 +675,8 @@ Step 6 을 통째로 건너뛰려면, 제공된 솔루션을 가져오면 됩니
 | Approvals 데이터베이스가 프로비저닝되었나요? | 기본 환경이 아닌 곳의 첫 승인 플로우는 환경 관리자가 실행해야 합니다. |
 
 > 🚑 **멈춘 배포 되살리기:** 플로우를 수정한 뒤 Power Automate 에서 실패한 실행을 열고 **Resubmit** 을 선택하세요. 원래 트리거 페이로드로 재생되면서 새 승인 요청이 발송됩니다.
+
+![Power Automate 의 플로우 실행 기록. 실패한 실행은 Resubmit 으로 다시 실행할 수 있습니다.](img/09-flow-run-history.png)
 
 ### 플로우 실패: `property 'approver/displayName' doesn't exist`
 
