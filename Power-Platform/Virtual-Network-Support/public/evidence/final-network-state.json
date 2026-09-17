@@ -1,0 +1,38 @@
+{
+  "capturedUtc": "2026-09-17T05:09:50.3214441Z",
+  "serverFqdn": "<my-sql-server>.database.windows.net",
+  "publicNetworkAccess": "Disabled",
+  "entraOnly": true,
+  "publicFirewallRuleCount": 0,
+  "privateEndpointStatus": "Approved",
+  "privateDns": [
+    {
+      "name": "<my-sql-server>",
+      "addresses": "10.80.2.4"
+    }
+  ],
+  "dnsVnetLinks": [
+    {
+      "name": "<my-failover-dns-link>",
+      "virtualNetworkLinkState": "Completed",
+      "provisioningState": "Succeeded"
+    },
+    {
+      "name": "<my-primary-dns-link>",
+      "virtualNetworkLinkState": "Completed",
+      "provisioningState": "Succeeded"
+    }
+  ],
+  "peerings": [
+    {
+      "name": "primary-to-failover",
+      "peeringState": "Connected",
+      "peeringSyncLevel": "FullyInSync"
+    },
+    {
+      "name": "failover-to-primary",
+      "peeringState": "Connected",
+      "peeringSyncLevel": "FullyInSync"
+    }
+  ]
+}

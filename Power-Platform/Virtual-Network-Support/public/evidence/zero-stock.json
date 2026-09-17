@@ -1,0 +1,35 @@
+{
+  "test": "Zero",
+  "capturedUtc": "2026-09-17T05:07:45.7031096Z",
+  "environmentId": "<my-env-id>",
+  "agentId": "<my-agent-id>",
+  "conversationId": "6d6d9b31-b880-4040-9820-884ec781de4b",
+  "managedEnvironment": true,
+  "policyAssociated": true,
+  "sqlPublicNetworkAccess": "Disabled",
+  "connectionId": "<my-connection-id>",
+  "prompt": "Look up SKU VN-1003 in the live inventory. Return its product name, warehouse, available quantity, unit price and currency, verification code, database UTC time, and observation ID.",
+  "tool": {
+    "operationId": "GetItems_V2",
+    "status": "completed",
+    "durationMs": 289,
+    "parameters": {
+      "$filter": "SKU eq 'VN-1003'"
+    },
+    "rows": [
+      {
+        "SKU": "VN-1003",
+        "ProductName": "Cedar telemetry hub",
+        "Warehouse": "Seattle",
+        "AvailableQuantity": 0,
+        "UnitPrice": 89.75,
+        "Currency": "USD",
+        "VerificationCode": "QUIET-COMET-5618",
+        "DatabaseUtc": "09/17/2026 05:03:13",
+        "ObservationId": "9B67D459-5920-418A-80EC-8226CB9B1219"
+      }
+    ]
+  },
+  "agentResponse": "Here are the details for SKU **VN-1003**:\n\n- **Product Name:** Cedar telemetry hub  \n- **Warehouse:** Seattle  \n- **Available Quantity:** 0  \n- **Unit Price:** 89.75  \n- **Currency:** USD  \n- **Verification Code:** QUIET-COMET-5618  \n- **Database UTC Time:** 09/17/2026 05:03:13  \n- **Observation ID:** 9B67D459-5920-418A-80EC-8226CB9B1219  ",
+  "outcome": "Passed"
+}

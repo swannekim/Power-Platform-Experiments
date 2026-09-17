@@ -1,0 +1,23 @@
+{
+  "test": "Missing",
+  "capturedUtc": "2026-09-17T05:03:02.9626714Z",
+  "environmentId": "<my-env-id>",
+  "agentId": "<my-agent-id>",
+  "conversationId": "82dd6aec-18ef-4cb1-8cd4-e182deb850b3",
+  "managedEnvironment": true,
+  "policyAssociated": true,
+  "sqlPublicNetworkAccess": "Disabled",
+  "connectionId": "<my-connection-id>",
+  "prompt": "Look up SKU VN-9999 in the live inventory. Return its product name, warehouse, available quantity, unit price and currency, verification code, database UTC time, and observation ID.",
+  "tool": {
+    "operationId": "GetItems_V2",
+    "status": "completed",
+    "durationMs": 3104,
+    "parameters": {
+      "$filter": "SKU eq 'VN-9999'"
+    },
+    "rows": []
+  },
+  "agentResponse": "No matching inventory record was found for SKU **VN-9999**.",
+  "outcome": "Passed"
+}

@@ -1,0 +1,6 @@
+mcs.metadata:
+  componentName: Readprivateinventory.$top
+kind: AgentVariable
+name: Readprivateinventory.$top
+type: "{\"type\":\"integer\",\"title\":\"Top Count\",\"format\":\"int32\",\"description\":\"Total number of entries to retrieve (default = all).\",\"x-ms-visibility\":\"advanced\",\"x-ms-property-name-alias\":\"$top\"}"
+defaultValue: 6

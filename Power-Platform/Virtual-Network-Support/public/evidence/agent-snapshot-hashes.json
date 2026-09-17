@@ -1,0 +1,47 @@
+{
+  "agentId": "<my-agent-id>",
+  "capturedUtc": "2026-09-17T04:58:41.2792059Z",
+  "files": [
+    {
+      "path": "agent.sync.yaml",
+      "sha256": "66760596E09843803A17DC311B4971347E459BD4E04BD8ED1A8508A8AD5BED39"
+    },
+    {
+      "path": "settings.mcs.yml",
+      "sha256": "13F6A6EACB99472590389209E944D8677B3254FC985CD733544E8CE3965BF595"
+    },
+    {
+      "path": "capabilities\\tools\\GetrowsV2_si-.mcs.yml",
+      "sha256": "1195C9EDE5D4544B8A4E4BAF5947DF167DE0197519E326C973865B0080F16CDA"
+    },
+    {
+      "path": "infrastructure\\connections\\sample_vnetinventory.cr.shared_sql.my-connection-id.sync.yaml",
+      "sha256": "67A8881ACF2AB558B63AFA3559439C9EB9447F8F7E01BBE1BB4DC447A7FDB256"
+    },
+    {
+      "path": "settings\\Default_FeedbackCollectionBotSettings_lvLLpX.mcs.yml",
+      "sha256": "215D54EEBFE5032917A3133F09E86B65F834BE02A0AD9A773FDF64697556B9CE"
+    },
+    {
+      "path": "variables\\sample_vnetinventory.var.Readprivateinventory.database.mcs.yml",
+      "sha256": "2FA5D8EB3658E48B6F7337F3A481D4F31AF0E5FBFFE915F5569977C363199D6C"
+    },
+    {
+      "path": "variables\\sample_vnetinventory.var.Readprivateinventory.orderby.mcs.yml",
+      "sha256": "6FF011376B3FCFA2F5C949964D2DE1C439D77BEFDA4209F98B5916698720C4BC"
+    },
+    {
+      "path": "variables\\sample_vnetinventory.var.Readprivateinventory.server.mcs.yml",
+      "sha256": "C70C784870F610BEBBA731A0DFC7846530F62683D63C24BC7AF44E6F632E5A1D"
+    },
+    {
+      "path": "variables\\sample_vnetinventory.var.Readprivateinventory.table.mcs.yml",
+      "sha256": "96E47A998D1D54613B23BBA2172DCF3A9A300F6A000421839CA55B6ECF8BCDD4"
+    },
+    {
+      "path": "variables\\sample_vnetinventory.var.Readprivateinventory.top.mcs.yml",
+      "sha256": "22061A3558A6FBC388B57B30A175DED9BAEE2E698CAB8DB4991EC58C2B689A7B"
+    }
+  ],
+  "hashScope": "Sanitized public source snapshot; not the original deployed file hashes."
+}

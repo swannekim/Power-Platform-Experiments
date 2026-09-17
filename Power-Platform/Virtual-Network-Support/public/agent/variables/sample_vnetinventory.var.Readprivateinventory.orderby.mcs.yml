@@ -1,0 +1,6 @@
+mcs.metadata:
+  componentName: Readprivateinventory.$orderby
+kind: AgentVariable
+name: Readprivateinventory.$orderby
+type: "{\"type\":\"string\",\"title\":\"Order By\",\"description\":\"An ODATA orderBy query for specifying the order of entries.\",\"x-ms-visibility\":\"advanced\",\"x-ms-property-name-alias\":\"$orderby\"}"
+defaultValue: SKU asc

@@ -1,0 +1,35 @@
+{
+  "test": "After",
+  "capturedUtc": "2026-09-17T05:01:38.2573243Z",
+  "environmentId": "<my-env-id>",
+  "agentId": "<my-agent-id>",
+  "conversationId": "71d317a0-1044-427b-98a7-b7abbff7b34e",
+  "managedEnvironment": true,
+  "policyAssociated": true,
+  "sqlPublicNetworkAccess": "Disabled",
+  "connectionId": "<my-connection-id>",
+  "prompt": "Look up SKU VN-1001 in the live inventory. Return its product name, warehouse, available quantity, unit price and currency, verification code, database UTC time, and observation ID.",
+  "tool": {
+    "operationId": "GetItems_V2",
+    "status": "completed",
+    "durationMs": 7937,
+    "parameters": {
+      "$filter": "SKU eq 'VN-1001'"
+    },
+    "rows": [
+      {
+        "SKU": "VN-1001",
+        "ProductName": "Aurora sensor kit",
+        "Warehouse": "Seattle",
+        "AvailableQuantity": 37,
+        "UnitPrice": 129.5,
+        "Currency": "USD",
+        "VerificationCode": "AZURE-LANTERN-7391",
+        "DatabaseUtc": "09/17/2026 04:57:53",
+        "ObservationId": "54AA95A7-673F-426A-B124-FD85B31CCF10"
+      }
+    ]
+  },
+  "agentResponse": "Here are the details for SKU **VN-1001**:\n\n- **Product Name:** Aurora sensor kit  \n- **Warehouse:** Seattle  \n- **Available Quantity:** 37  \n- **Unit Price:** 129.5  \n- **Currency:** USD  \n- **Verification Code:** AZURE-LANTERN-7391  \n- **Database UTC Time:** 09/17/2026 04:57:53  \n- **Observation ID:** 54AA95A7-673F-426A-B124-FD85B31CCF10  ",
+  "outcome": "Passed"
+}

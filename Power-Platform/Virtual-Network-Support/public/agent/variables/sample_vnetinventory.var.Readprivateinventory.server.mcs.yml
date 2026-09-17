@@ -1,0 +1,6 @@
+mcs.metadata:
+  componentName: Readprivateinventory.server
+kind: AgentVariable
+name: Readprivateinventory.server
+type: "{\"type\":\"string\",\"title\":\"Server name\",\"x-ms-dynamic-list\":{\"operationId\":\"GetServers\",\"parameters\":{},\"itemsPath\":\"value\",\"itemValuePath\":\"Name\",\"itemTitlePath\":\"DisplayName\"},\"description\":\"Name of SQL server\",\"minLength\":1,\"x-ms-property-name-alias\":\"server\"}"
+defaultValue: <my-sql-server>.database.windows.net

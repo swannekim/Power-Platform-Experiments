@@ -1,0 +1,26 @@
+{
+  "test": "A - private SQL without VNet injection",
+  "capturedUtc": "2026-09-17T04:53:01.5291158Z",
+  "environmentId": "<my-env-id>",
+  "agentId": "<my-agent-id>",
+  "conversationId": "874a85e7-9d66-4891-af86-5c5707d81144",
+  "managedEnvironment": true,
+  "policyAssociated": false,
+  "sqlPublicNetworkAccess": "Disabled",
+  "connectionId": "<my-connection-id>",
+  "prompt": "Look up SKU VN-1001 in the live inventory. Return its product name, warehouse, available quantity, unit price and currency, verification code, database UTC time, and observation ID.",
+  "tool": {
+    "operationId": "GetItems_V2",
+    "status": "failed",
+    "durationMs": 2987,
+    "parameters": {
+      "$select": "SKU,ProductName,Warehouse,AvailableQuantity,UnitPrice,Currency,VerificationCode,DatabaseUtc,ObservationId",
+      "$filter": "SKU eq 'VN-1001'"
+    },
+    "httpStatus": 502,
+    "clientRequestId": "<my-client-request-id>",
+    "message": "Reason: An instance-specific error occurred while establishing a connection to SQL Server. Connection was denied because Deny Public Network Access is set to Yes. For more information, see https://go.microsoft.com/fwlink/?linkid=2323206."
+  },
+  "agentResponse": "The private inventory database could not be reached because public network access is denied. As a result, I\u2019m unable to retrieve any details for SKU **VN-1001** at this time.",
+  "outcome": "Expected network-path failure; no inventory facts returned"
+}

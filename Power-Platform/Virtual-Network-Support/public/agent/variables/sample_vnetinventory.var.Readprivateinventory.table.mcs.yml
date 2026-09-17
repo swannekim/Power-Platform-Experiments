@@ -1,0 +1,6 @@
+mcs.metadata:
+  componentName: Readprivateinventory.table
+kind: AgentVariable
+name: Readprivateinventory.table
+type: "{\"type\":\"string\",\"title\":\"Table name\",\"x-ms-dynamic-list\":{\"operationId\":\"GetTables_V2\",\"parameters\":{\"server\":{\"parameterReference\":\"server\",\"required\":true},\"database\":{\"parameterReference\":\"database\",\"required\":true}},\"itemsPath\":\"value\",\"itemValuePath\":\"Name\",\"itemTitlePath\":\"DisplayName\"},\"description\":\"Name of SQL table\",\"minLength\":1,\"x-ms-property-name-alias\":\"table\"}"
+defaultValue: "[dbo].[InventoryLive]"

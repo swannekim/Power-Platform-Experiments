@@ -1,0 +1,6 @@
+mcs.metadata:
+  componentName: Readprivateinventory.database
+kind: AgentVariable
+name: Readprivateinventory.database
+type: "{\"type\":\"string\",\"title\":\"Database name\",\"x-ms-dynamic-list\":{\"operationId\":\"GetDatabases\",\"parameters\":{\"server\":{\"parameterReference\":\"server\",\"required\":true}},\"itemsPath\":\"value\",\"itemValuePath\":\"Name\",\"itemTitlePath\":\"DisplayName\"},\"description\":\"Database name\",\"minLength\":1,\"x-ms-property-name-alias\":\"database\"}"
+defaultValue: InventoryDemo

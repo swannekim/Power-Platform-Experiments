@@ -1,0 +1,3 @@
+connectionReferences:
+  - connectionReferenceLogicalName: sample_vnetinventory.cr.shared_sql.my-connection-id
+    connectorId: /providers/Microsoft.PowerApps/apis/shared_sql

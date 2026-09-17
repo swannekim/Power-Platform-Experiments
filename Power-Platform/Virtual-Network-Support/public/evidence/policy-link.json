@@ -1,0 +1,18 @@
+{
+  "operationId": "<my-policy-operation-id>",
+  "operationState": "Succeeded",
+  "operationStartedUtc": "2026-09-17T04:53:27.5334277Z",
+  "operationCompletedUtc": "2026-09-17T04:53:32.0463551Z",
+  "environmentId": "<my-env-id>",
+  "association": {
+    "policyId": "<my-policy-id>",
+    "location": "unitedstates",
+    "id": "/subscriptions/<my-subscription-id>/resourceGroups/<my-resource-group>/providers/Microsoft.PowerPlatform/enterprisePolicies/<my-policy-name>",
+    "systemId": "/regions/unitedstates/providers/Microsoft.PowerPlatform/enterprisePolicies/<my-policy-id>",
+    "tenantId": "<my-tenant-id>",
+    "linkStatus": "Linked"
+  },
+  "managementState": "Ready",
+  "runtimeState": "Enabled",
+  "capturedUtc": "2026-09-17T04:55:25.8451019Z"
+}

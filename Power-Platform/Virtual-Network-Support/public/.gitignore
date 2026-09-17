@@ -1,0 +1,4 @@
+.mcs/
+*.credential.clixml
+*.pfx
+*.key

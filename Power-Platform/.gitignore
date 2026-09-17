@@ -1,0 +1,3 @@
+# Keep tenant-specific lab originals local. Publish only the sanitized edition.
+/Virtual-Network-Support/*
+!/Virtual-Network-Support/public/

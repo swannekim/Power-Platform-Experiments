@@ -1,0 +1,33 @@
+mcs.metadata:
+  componentName: Read private inventory
+  description: Read live synthetic inventory from the private Azure SQL view. Call for every inventory request and report returned records or the actual access error; never guess inventory facts.
+kind: ConnectorTool
+authMode: Maker
+connectionReference: sample_vnetinventory.cr.shared_sql.my-connection-id
+connectorId: /providers/Microsoft.PowerApps/apis/shared_sql
+operationId: GetItems_V2
+toolInputs:
+  - name: server
+    value:
+      kind: ContextVariableReference
+      name: Readprivateinventory.server
+
+  - name: database
+    value:
+      kind: ContextVariableReference
+      name: Readprivateinventory.database
+
+  - name: table
+    value:
+      kind: ContextVariableReference
+      name: Readprivateinventory.table
+
+  - name: $orderby
+    value:
+      kind: ContextVariableReference
+      name: Readprivateinventory.$orderby
+
+  - name: $top
+    value:
+      kind: ContextVariableReference
+      name: Readprivateinventory.$top
