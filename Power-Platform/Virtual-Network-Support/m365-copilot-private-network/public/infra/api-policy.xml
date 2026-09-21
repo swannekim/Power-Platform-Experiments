@@ -1,0 +1,25 @@
+<policies>
+  <inbound>
+    <set-header name="Ocp-Apim-Subscription-Key" exists-action="delete" />
+    <set-query-parameter name="subscription-key" exists-action="delete" />
+    <set-header name="Cache-Control" exists-action="override">
+      <value>no-store</value>
+    </set-header>
+  </inbound>
+  <backend>
+    <forward-request timeout="8" fail-on-error-status-code="false" />
+  </backend>
+  <outbound>
+    <set-header name="Cache-Control" exists-action="override">
+      <value>no-store, max-age=0</value>
+    </set-header>
+    <set-header name="Pragma" exists-action="override">
+      <value>no-cache</value>
+    </set-header>
+  </outbound>
+  <on-error>
+    <set-header name="Cache-Control" exists-action="override">
+      <value>no-store, max-age=0</value>
+    </set-header>
+  </on-error>
+</policies>

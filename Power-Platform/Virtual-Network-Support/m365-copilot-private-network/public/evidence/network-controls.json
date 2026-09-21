@@ -1,0 +1,252 @@
+{
+  "origin": "PowerShell controls and Azure telemetry; not Toolkit agent invocations",
+  "redaction": "Tenant, subscription, resource identifiers, backend hostnames and full URLs are omitted. Synthetic records and request-correlation identifiers are retained.",
+  "networkStates": [
+    {
+      "recordedAtUtc": "2026-09-21T05:43:35.5897585Z",
+      "requestedAccess": "Get",
+      "previousAccess": "Allow",
+      "access": "Allow",
+      "backendPublicNetworkAccess": "Disabled",
+      "privateEndpointNetworkPolicies": "NetworkSecurityGroupEnabled",
+      "rule": {
+        "direction": "Inbound",
+        "priority": 100,
+        "protocol": "Tcp",
+        "sourceAddressPrefix": "10.90.1.0/27",
+        "sourcePortRange": "*",
+        "destinationAddressPrefix": "10.90.2.0/27",
+        "destinationPortRange": "443"
+      },
+      "controlPlaneVerified": true,
+      "dataPlaneVerified": false,
+      "note": "NSGs are stateful. Allow propagation time and use fresh backend TCP connections. A control-plane rule state alone does not prove a data-plane failure or recovery."
+    },
+    {
+      "recordedAtUtc": "2026-09-21T05:44:38.6855407Z",
+      "requestedAccess": "Deny",
+      "previousAccess": "Allow",
+      "access": "Deny",
+      "backendPublicNetworkAccess": "Disabled",
+      "privateEndpointNetworkPolicies": "NetworkSecurityGroupEnabled",
+      "rule": {
+        "direction": "Inbound",
+        "priority": 100,
+        "protocol": "Tcp",
+        "sourceAddressPrefix": "10.90.1.0/27",
+        "sourcePortRange": "*",
+        "destinationAddressPrefix": "10.90.2.0/27",
+        "destinationPortRange": "443"
+      },
+      "controlPlaneVerified": true,
+      "dataPlaneVerified": false,
+      "note": "NSGs are stateful. Allow propagation time and use fresh backend TCP connections. A control-plane rule state alone does not prove a data-plane failure or recovery."
+    },
+    {
+      "recordedAtUtc": "2026-09-21T05:46:56.3836266Z",
+      "requestedAccess": "Allow",
+      "previousAccess": "Deny",
+      "access": "Allow",
+      "backendPublicNetworkAccess": "Disabled",
+      "privateEndpointNetworkPolicies": "NetworkSecurityGroupEnabled",
+      "rule": {
+        "direction": "Inbound",
+        "priority": 100,
+        "protocol": "Tcp",
+        "sourceAddressPrefix": "10.90.1.0/27",
+        "sourcePortRange": "*",
+        "destinationAddressPrefix": "10.90.2.0/27",
+        "destinationPortRange": "443"
+      },
+      "controlPlaneVerified": true,
+      "dataPlaneVerified": false,
+      "note": "NSGs are stateful. Allow propagation time and use fresh backend TCP connections. A control-plane rule state alone does not prove a data-plane failure or recovery."
+    }
+  ],
+  "probes": [
+    {
+      "recordedAtUtc": "2026-09-21T05:36:02.5336646Z",
+      "origin": "PowerShell control probe, not an agent invocation",
+      "endpoint": "apim",
+      "authentication": "API-scoped subscription key (not retained)",
+      "method": "GET",
+      "path": "/health",
+      "nonce": "control-resume-002",
+      "status": 200,
+      "elapsedSeconds": 0.841,
+      "body": {
+        "synthetic": true,
+        "status": "ok",
+        "service": "synthetic-private-gateway",
+        "nonce": "control-resume-002",
+        "observedAtUtc": "2026-09-21T05:35:58.111Z",
+        "observationId": "83f952c0-c2c8-4b38-8077-524f2879fb8a",
+        "verificationCode": "SYN-HEALTH-6H2P"
+      }
+    },
+    {
+      "recordedAtUtc": "2026-09-21T05:45:29.6868349Z",
+      "origin": "PowerShell control probe, not an agent invocation",
+      "endpoint": "apim",
+      "authentication": "API-scoped subscription key (not retained)",
+      "method": "GET",
+      "path": "/purchase-orders/PO-1001",
+      "nonce": "control-deny-001",
+      "status": 500,
+      "elapsedSeconds": 8.4,
+      "body": {
+        "statusCode": 500,
+        "message": "Internal server error",
+        "activityId": "d5624933-096c-45e1-9be3-b26f8fb70aa2"
+      }
+    },
+    {
+      "recordedAtUtc": "2026-09-21T05:47:16.8499577Z",
+      "origin": "PowerShell control probe, not an agent invocation",
+      "endpoint": "apim",
+      "authentication": "API-scoped subscription key (not retained)",
+      "method": "GET",
+      "path": "/purchase-orders/PO-1001",
+      "nonce": "control-recovery-001",
+      "status": 200,
+      "elapsedSeconds": 0.287,
+      "body": {
+        "synthetic": true,
+        "record": {
+          "id": "PO-1001",
+          "PurchaseOrder": "PO-1001",
+          "CompanyCode": "DEMO",
+          "Supplier": "SYNTHETIC-SUPPLIER",
+          "DocumentCurrency": "KRW",
+          "TotalNetAmount": 12000,
+          "items": [
+            {
+              "PurchaseOrderItem": "00010",
+              "Material": "DEMO-COMPONENT",
+              "OrderQuantity": 12,
+              "PurchaseOrderQuantityUnit": "EA",
+              "NetPriceAmount": 1000,
+              "NetAmount": 12000
+            }
+          ]
+        },
+        "nonce": "control-recovery-001",
+        "observedAtUtc": "2026-09-21T05:47:11.883Z",
+        "observationId": "7340cea8-81f8-4c81-9b3c-bd5fe3d277ea",
+        "verificationCode": "SYN-PO-2W9F"
+      }
+    }
+  ],
+  "telemetry": [
+    {
+      "nonce": "control-deny-001",
+      "controlPlaneReadAtUtc": "2026-09-21T05:46:10.7111187Z",
+      "observedRuleAccess": "Deny",
+      "queriedAtUtc": "2026-09-21T05:46:21.0459294Z",
+      "requestCount": 1,
+      "backendDependencyCount": 1,
+      "backendObservationCount": 0,
+      "events": [
+        {
+          "TimeGenerated": "2026-09-21T05:45:24.790068Z",
+          "EvidenceKind": "request",
+          "OperationId": "84e30f8625de1813e1278b18923a4ad9",
+          "Id": "5e2b9293f3d40d08",
+          "ParentId": "84e30f8625de1813e1278b18923a4ad9",
+          "Name": "GET /synthetic/purchase-orders/PO-1001",
+          "Success": "False",
+          "ResultCode": "500",
+          "DurationMs": "7995.4453",
+          "Nonce": "control-deny-001",
+          "ExactNonceMatch": "True",
+          "ExpectedBackend": "False",
+          "BodyCaptured": "True",
+          "BackendObservationPresent": "False",
+          "BackendObservedAtUtc": "",
+          "BackendObservationId": "",
+          "SyntheticResponse": ""
+        },
+        {
+          "TimeGenerated": "2026-09-21T05:45:24.7907048Z",
+          "EvidenceKind": "dependency",
+          "OperationId": "84e30f8625de1813e1278b18923a4ad9",
+          "Id": "09b3ddd3d468a23e",
+          "ParentId": "5e2b9293f3d40d08",
+          "Name": "GET /purchase-orders/PO-1001",
+          "Success": "False",
+          "ResultCode": "",
+          "DurationMs": "7993.6327",
+          "Nonce": "control-deny-001",
+          "ExactNonceMatch": "True",
+          "ExpectedBackend": "True",
+          "BodyCaptured": "False",
+          "BackendObservationPresent": "False",
+          "BackendObservedAtUtc": "",
+          "BackendObservationId": "",
+          "SyntheticResponse": ""
+        }
+      ],
+      "interpretation": "Dependency telemetry proves an APIM backend attempt, not necessarily success. A matching synthetic backend response supplies stronger runtime evidence. No rows, missing tables, late ingestion, RBAC propagation, caps, or missing body capture never prove that no request occurred."
+    },
+    {
+      "nonce": "control-recovery-001",
+      "controlPlaneReadAtUtc": "2026-09-21T05:47:50.1834523Z",
+      "observedRuleAccess": "Allow",
+      "queriedAtUtc": "2026-09-21T05:47:58.5883444Z",
+      "requestCount": 1,
+      "backendDependencyCount": 1,
+      "backendObservationCount": 1,
+      "events": [
+        {
+          "TimeGenerated": "2026-09-21T05:47:11.8433616Z",
+          "EvidenceKind": "request",
+          "OperationId": "0b62f9ba2cc9db0f1c3fa88e7fc344a7",
+          "Id": "3e5662e2bec2c52f",
+          "ParentId": "0b62f9ba2cc9db0f1c3fa88e7fc344a7",
+          "Name": "GET /synthetic/purchase-orders/PO-1001",
+          "Success": "True",
+          "ResultCode": "200",
+          "DurationMs": "62.4483",
+          "Nonce": "control-recovery-001",
+          "ExactNonceMatch": "True",
+          "ExpectedBackend": "False",
+          "BodyCaptured": "True",
+          "BackendObservationPresent": "False",
+          "BackendObservedAtUtc": "2026-09-21T05:47:11.883Z",
+          "BackendObservationId": "7340cea8-81f8-4c81-9b3c-bd5fe3d277ea",
+          "SyntheticResponse": "{\"synthetic\":true,\"record\":{\"id\":\"PO-1001\",\"PurchaseOrder\":\"PO-1001\",\"CompanyCode\":\"DEMO\",\"Supplier\":\"SYNTHETIC-SUPPLIER\",\"DocumentCurrency\":\"KRW\",\"TotalNetAmount\":12000,\"items\":[{\"PurchaseOrderItem\":\"00010\",\"Material\":\"DEMO-COMPONENT\",\"OrderQuantity\":12,\"PurchaseOrderQuantityUnit\":\"EA\",\"NetPriceAmount\":1000,\"NetAmount\":12000}]},\"nonce\":\"control-recovery-001\",\"observedAtUtc\":\"2026-09-21T05:47:11.8830000Z\",\"observationId\":\"7340cea8-81f8-4c81-9b3c-bd5fe3d277ea\",\"verificationCode\":\"SYN-PO-2W9F\"}"
+        },
+        {
+          "TimeGenerated": "2026-09-21T05:47:11.8437003Z",
+          "EvidenceKind": "dependency",
+          "OperationId": "0b62f9ba2cc9db0f1c3fa88e7fc344a7",
+          "Id": "f30bca5510157533",
+          "ParentId": "3e5662e2bec2c52f",
+          "Name": "GET /purchase-orders/PO-1001",
+          "Success": "True",
+          "ResultCode": "200",
+          "DurationMs": "61.8847",
+          "Nonce": "control-recovery-001",
+          "ExactNonceMatch": "True",
+          "ExpectedBackend": "True",
+          "BodyCaptured": "True",
+          "BackendObservationPresent": "True",
+          "BackendObservedAtUtc": "2026-09-21T05:47:11.883Z",
+          "BackendObservationId": "7340cea8-81f8-4c81-9b3c-bd5fe3d277ea",
+          "SyntheticResponse": "{\"synthetic\":true,\"record\":{\"id\":\"PO-1001\",\"PurchaseOrder\":\"PO-1001\",\"CompanyCode\":\"DEMO\",\"Supplier\":\"SYNTHETIC-SUPPLIER\",\"DocumentCurrency\":\"KRW\",\"TotalNetAmount\":12000,\"items\":[{\"PurchaseOrderItem\":\"00010\",\"Material\":\"DEMO-COMPONENT\",\"OrderQuantity\":12,\"PurchaseOrderQuantityUnit\":\"EA\",\"NetPriceAmount\":1000,\"NetAmount\":12000}]},\"nonce\":\"control-recovery-001\",\"observedAtUtc\":\"2026-09-21T05:47:11.8830000Z\",\"observationId\":\"7340cea8-81f8-4c81-9b3c-bd5fe3d277ea\",\"verificationCode\":\"SYN-PO-2W9F\"}"
+        }
+      ],
+      "interpretation": "Dependency telemetry proves an APIM backend attempt, not necessarily success. A matching synthetic backend response supplies stronger runtime evidence. No rows, missing tables, late ingestion, RBAC propagation, caps, or missing body capture never prove that no request occurred."
+    }
+  ],
+  "privateSourceSha256": {
+    "network-resume-before.json": "3C61FDFF43443AEA4720C71750053ADAA42C385156A1509D94391DABA7A9489C",
+    "network-control-deny.json": "2FB1AA9352E1AC7432394B3FBDD996064F9F6523FE393701D7CBAA10A6216757",
+    "network-control-restored.json": "AFA5CA46A0784264C86AD11AAD987034ECAC015F14514B8FEAE38A68B1016F3C",
+    "control-resume-002.json": "C600E2E0801F5E7E4B533F329E72F171C87E46B7C4A0466AE5270B5D67C6CCB3",
+    "control-deny-001.json": "3A0F07B6149A8F2386A2108F576E942A016EF6972BE2165337736CAB28093219",
+    "control-recovery-001.json": "89AC74B2F3DE04DC7DF42C6AB92D3002324A954C83BA8DD9C4563B4D231D92F8",
+    "control-deny-001-telemetry.json": "858BDF9AE02A1378B7586FA0A394192E295338BE5B30FDF1FFEB4366F39B3329",
+    "control-recovery-001-telemetry.json": "A1974661490439D6A09797E7C1114DC2D141C672E63E07F274AE045210864136"
+  }
+}

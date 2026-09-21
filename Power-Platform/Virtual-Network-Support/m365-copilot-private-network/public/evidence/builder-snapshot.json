@@ -1,0 +1,5 @@
+{
+  "recordedAtUtc": "2026-09-21T03:23:16.22Z",
+  "origin": "Agent Builder runtime; embedded-file grounding",
+  "transcript": "Auto\nYou said:\nAccording to the uploaded snapshot, what are the quantity and total amount for PO-1001? State the snapshot date and revision.\n\nPrivate API Knowledge Lab said:\nPrivate API Knowledge Lab\nAccording to the uploaded snapshot:\nPurchase Order: PO-1001\nQuantity: 7 EA\nTotal net amount: 7000 KRW\nSnapshot details:\nSnapshot date: 2026-09-20\nSnapshot revision: SNAPSHOT-001\nNote: The snapshot explicitly states that it contains fictional demonstration data only and is not connected to a live SAP or backend system. The values above apply only to revision SNAPSHOT-001.\nSummarize the PO-1001 details in one line\nCompare PO-1001 with another purchase order in the snapshot\nDraft a note citing the snapshot date and revision\n\n\n\n\nMessage Private API Knowledge Lab\nAI-generated content may be incorrect"
+}

@@ -1,0 +1,142 @@
+{
+  "date": "2026-09-21",
+  "status": "Personal installation passed; live API-action baseline not established",
+  "licensing": {
+    "appliedAtUtc": "2026-09-21T06:07:12.71Z",
+    "serverHttpStatus": 200,
+    "serverPerUserStatus": 1,
+    "selectedProductsBefore": 18,
+    "selectedProductsAfter": 17,
+    "observedChanges": [
+      {
+        "product": "Microsoft Teams Phone Standard",
+        "service": "Microsoft 365 Phone System",
+        "from": false,
+        "to": true
+      },
+      {
+        "product": "Microsoft Teams Phone Resource Account",
+        "from": true,
+        "to": false
+      }
+    ],
+    "teamsInterpretedUserType": "PureOnlineTeamsOnlyUser",
+    "teamsAccountType": "User"
+  },
+  "personalInstallation": {
+    "policyName": "Private API Lab Sideload",
+    "policyAssignmentResult": "Success",
+    "effectiveSideloadAllowed": true,
+    "installedAppName": "Private API Lab",
+    "copilotEnabled": true,
+    "distribution": "Personal sideload; U_ agent opened in Copilot",
+    "organizationPublication": false
+  },
+  "conversations": [
+    {
+      "sourceFile": "toolkit-allow-001-conversation.json",
+      "conversationId": "3d2f395f-3f1d-444d-86c9-a7aa17589d97",
+      "origin": "Observed Copilot UI text, not an independently captured tool response",
+      "transcript": "You said:\nRead PO-1001 using nonce toolkit-allow-001. Return the quantity, total amount and currency, verificationCode, observedAtUtc and observationId.\nPrivate API Lab said:\nPrivate API Lab\nLive data could not be retrieved for purchase order PO-1001.\nError reported by the API:\nPlain Text\n1\nPrivateGateway_getPurchaseOrder(id=\"PO-1001\",nonce=\"toolkit-allow-001\") encountered an error when processing.\nI do not have a successful current invocation, so I cannot provide the quantity, total amount, currency, verificationCode, observedAtUtc, observationId, or echoed nonce."
+    },
+    {
+      "sourceFile": "toolkit-allow-002-conversation.json",
+      "conversationId": "f8e39578-0bef-4f3f-805c-b2b38bb39c99",
+      "origin": "Observed Copilot UI text, not an independently captured tool response",
+      "transcript": "You said:\n-developer on\n\nPrivate API Lab said:\nPrivate API Lab\nSuccessfully enabled developer mode.\nYou said:\nRead PO-1001 using nonce toolkit-allow-002. Return quantity, total amount, currency, verificationCode, observedAtUtc and observationId.\n\nPrivate API Lab said:\nPrivate API Lab\nLive data could not be retrieved for purchase order PO-1001.\nError reported by the backend:\nPrivateGateway_getPurchaseOrder(id=\"PO-1001\", nonce=\"toolkit-allow-002\") encountered an error when processing.\nBecause the lookup did not succeed, I do not have current values for:\nquantity\ntotal amount\ncurrency\nverificationCode\nobservedAtUtc\nobservationId\nechoed nonce\nNo record data was returned by the service."
+    },
+    {
+      "sourceFile": "toolkit-diagnostic-conversation-final.json",
+      "conversationId": "f8e39578-0bef-4f3f-805c-b2b38bb39c99",
+      "origin": "Observed Copilot UI text, not an independently captured tool response",
+      "transcript": "You said:\n-developer on\n\nPrivate API Lab said:\nPrivate API Lab\nSuccessfully enabled developer mode.\nYou said:\nRead PO-1001 using nonce toolkit-allow-002. Return quantity, total amount, currency, verificationCode, observedAtUtc and observationId.\n\nPrivate API Lab said:\nPrivate API Lab\nLive data could not be retrieved for purchase order PO-1001.\nError reported by the backend:\nPrivateGateway_getPurchaseOrder(id=\"PO-1001\", nonce=\"toolkit-allow-002\") encountered an error when processing.\nBecause the lookup did not succeed, I do not have current values for:\nquantity\ntotal amount\ncurrency\nverificationCode\nobservedAtUtc\nobservationId\nechoed nonce\nNo record data was returned by the service.\nYou said:\nCall getHealth using nonce toolkit-health-001 and return only the actual current API result. If it fails, report the actual error without guessing a cause.\n\nPrivate API Lab said:\nPrivate API Lab\nLive data could not be retrieved.\nActual error returned by the API:\nPrivateGateway_getHealth(nonce=\"toolkit-health-001\") encountered an error when processing.\n"
+    }
+  ],
+  "initialNonceTelemetry": {
+    "nonce": "toolkit-allow-001",
+    "queriedAtUtc": "2026-09-21T06:19:03.5983289Z",
+    "requestCount": 0,
+    "backendDependencyCount": 0,
+    "backendObservationCount": 0
+  },
+  "broadDiagnosticQuery": {
+    "recordedAtUtc": "2026-09-21T06:24:47.3801517Z",
+    "origin": "Read-only broad APIM diagnostic query, not an agent invocation",
+    "lookbackMinutes": 45,
+    "query": "AppRequests | where TimeGenerated > ago(45m) | project TimeGenerated, Name, ResultCode, Success, DurationMs, Nonce=extract(@'[?&]nonce=([^&#]*)',1,Url), OperationId | order by TimeGenerated asc",
+    "rows": [
+      {
+        "DurationMs": "7995.4453",
+        "Name": "GET /synthetic/purchase-orders/PO-1001",
+        "Nonce": "control-deny-001",
+        "OperationId": "84e30f8625de1813e1278b18923a4ad9",
+        "ResultCode": "500",
+        "Success": "False",
+        "TableName": "PrimaryResult",
+        "TimeGenerated": "2026-09-21T05:45:24.790068Z"
+      },
+      {
+        "DurationMs": "62.4483",
+        "Name": "GET /synthetic/purchase-orders/PO-1001",
+        "Nonce": "control-recovery-001",
+        "OperationId": "0b62f9ba2cc9db0f1c3fa88e7fc344a7",
+        "ResultCode": "200",
+        "Success": "True",
+        "TableName": "PrimaryResult",
+        "TimeGenerated": "2026-09-21T05:47:11.8433616Z"
+      },
+      {
+        "DurationMs": "38.1468",
+        "Name": "GET /synthetic/health",
+        "Nonce": "control-toolkit-diagnostic-001",
+        "OperationId": "6c7941aef5a10475ea1dffd609dc99ec",
+        "ResultCode": "200",
+        "Success": "True",
+        "TableName": "PrimaryResult",
+        "TimeGenerated": "2026-09-21T06:22:45.0047533Z"
+      }
+    ],
+    "caution": "No matching rows alone do not establish that no request was attempted."
+  },
+  "contemporaneousDirectControl": {
+    "recordedAtUtc": "2026-09-21T06:22:49.9563478Z",
+    "origin": "PowerShell control probe, not an agent invocation",
+    "endpoint": "apim",
+    "authentication": "API-scoped subscription key (not retained)",
+    "method": "GET",
+    "path": "/health",
+    "nonce": "control-toolkit-diagnostic-001",
+    "status": 200,
+    "elapsedSeconds": 0.402,
+    "body": {
+      "synthetic": true,
+      "status": "ok",
+      "service": "synthetic-private-gateway",
+      "nonce": "control-toolkit-diagnostic-001",
+      "observedAtUtc": "2026-09-21T06:22:45.039Z",
+      "observationId": "a849ce50-9311-45cc-8c50-9e08fe1d7f94",
+      "verificationCode": "SYN-HEALTH-6H2P"
+    }
+  },
+  "interpretation": [
+    "The UI reported generic function-processing errors for purchase-order and health requests.",
+    "No matching backend proof or developer execution card was captured for those responses.",
+    "The direct authenticated API control succeeded, while sampled diagnostic queries returned no matching Toolkit nonce.",
+    "Missing logs do not by themselves prove that no request was attempted or identify the failure layer.",
+    "The responses did not fabricate the requested live values, but their API/backend attribution is unverified.",
+    "Mail, zero, missing and agent-side deny/recovery cases are deferred until a positive agent baseline exists."
+  ],
+  "privateSourceSha256": {
+    "lab-license-correction-applied.json": "5DB0882EE29755B66935F2FCFBB15D5C56DA6F721F563391C61723B0C204DAC3",
+    "lab-policy-assignment-success.json": "2358409E730B69B04A2FB76DAED22CB3CFDF2D4F628B7332E5F06C98CB4B48D0",
+    "lab-teams-user-after-correction.json": "16FA2F380DE9661F362A14B38BE119476F858B555FE940E5ED677A89B0BC0CD2",
+    "lab-effective-sideload-policy.json": "0E51D584D665BBD3E4B4850A8A6809646321EC5C36793C48E337B061473FFE91",
+    "lab-personal-install-response.json": "21C8EF5A6492E8B7B563947612E182AC669C39D00419EE56DB6E2EF1173201ED",
+    "toolkit-allow-001-telemetry.json": "620D21E025C2DF5DAA5526AA88DB72CE8825EB0B67C31024EA50FD5D94AA02DC",
+    "toolkit-diagnostic-apim-requests.json": "84ED407FFE814B12C85F45E92E1D7CAEACF32F9A13405AB10EE889658FCD407F",
+    "control-toolkit-diagnostic-001.json": "E873182AB9886E0C6C3E03D3C55318726F57BD9148502BE7AD3B63BBE79E2BDE",
+    "toolkit-allow-001-conversation.json": "41ECC30A8B8AEF92655E81944900F3AA8B0324C7095EDEEA55B2B3CFE20F483D",
+    "toolkit-allow-002-conversation.json": "4410FDDD13939C95333F0F664A32AF3B0775115F6460AE82642CF75780F8BDF2",
+    "toolkit-diagnostic-conversation-final.json": "556A0895262F3C72BFB255947365A545563C587EF5CBD7A2AE1A088BA371B086"
+  }
+}

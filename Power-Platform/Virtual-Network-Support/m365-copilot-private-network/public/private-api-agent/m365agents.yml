@@ -1,0 +1,53 @@
+# yaml-language-server: $schema=https://aka.ms/m365-agents-toolkits/v1.12/yaml.schema.json
+version: v1.12
+environmentFolderPath: ./env
+
+provision:
+  - uses: teamsApp/create
+    with:
+      name: Private API Lab
+    writeToEnvironmentFile:
+      teamsAppId: TEAMS_APP_ID
+
+  - uses: apiKey/register
+    with:
+      name: Private API Lab - API scoped
+      appId: ${{TEAMS_APP_ID}}
+      baseUrl: ${{GATEWAY_BASE_URL}}
+      primaryClientSecret: ${{SECRET_APIM_KEY}}
+      targetAudience: HomeTenant
+      applicableToApps: SpecificApp
+    writeToEnvironmentFile:
+      registrationId: API_KEY_REGISTRATION_ID
+
+  - uses: teamsApp/zipAppPackage
+    with:
+      manifestPath: ./appPackage/manifest.json
+      outputZipPath: ./appPackage/build/appPackage.${{TEAMSFX_ENV}}.zip
+      outputFolder: ./appPackage/build
+
+  - uses: teamsApp/validateAppPackage
+    with:
+      appPackagePath: ./appPackage/build/appPackage.${{TEAMSFX_ENV}}.zip
+
+  - uses: teamsApp/update
+    with:
+      appPackagePath: ./appPackage/build/appPackage.${{TEAMSFX_ENV}}.zip
+
+  - uses: copilotAgent/publish
+    with:
+      appPackagePath: ./appPackage/build/appPackage.${{TEAMSFX_ENV}}.zip
+      scope: personal
+    writeToEnvironmentFile:
+      titleId: M365_TITLE_ID
+      appId: M365_APP_ID
+
+  - uses: apiKey/update
+    with:
+      registrationId: ${{API_KEY_REGISTRATION_ID}}
+      # Including the runtime ID also prevents app-ID-only changes being skipped by Toolkit's comparison.
+      name: Private API Lab - runtime ${{M365_APP_ID}}
+      appId: ${{M365_APP_ID}}
+      baseUrl: ${{GATEWAY_BASE_URL}}
+      targetAudience: HomeTenant
+      applicableToApps: SpecificApp

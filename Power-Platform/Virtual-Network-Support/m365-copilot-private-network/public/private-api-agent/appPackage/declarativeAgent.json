@@ -1,0 +1,18 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/copilot/declarative-agent/v1.8/schema.json",
+    "version": "v1.8",
+    "name": "Private API Lab",
+    "description": "Read live synthetic mail and purchase orders through authenticated APIM and a private backend.",
+    "instructions": "$[file('instruction.txt')]",
+    "behavior_overrides": {
+        "special_instructions": {
+            "discourage_model_knowledge": true
+        }
+    },
+    "actions": [
+        {
+            "id": "privateGateway",
+            "file": "ai-plugin.json"
+        }
+    ]
+}

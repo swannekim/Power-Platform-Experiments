@@ -1,0 +1,66 @@
+{
+  "healthVerificationCode": "SYN-HEALTH-6H2P",
+  "errorVerificationCode": "SYN-ERROR-8R4K",
+  "mail": {
+    "MAIL-1001": {
+      "id": "MAIL-1001",
+      "subject": "Synthetic order review: PO-1001",
+      "from": "procurement@example.invalid",
+      "to": "reviewer@example.invalid",
+      "receivedAtUtc": "2026-01-01T00:00:00Z",
+      "body": "Synthetic lab message only. Review purchase order PO-1001 for 12 demonstration components. No real mailbox or business system is connected.",
+      "purchaseOrderId": "PO-1001",
+      "verificationCode": "SYN-MAIL-5D7Q"
+    },
+    "MAIL-ZERO": {
+      "id": "MAIL-ZERO",
+      "subject": "Synthetic zero-value order: PO-ZERO",
+      "from": "procurement@example.invalid",
+      "to": "reviewer@example.invalid",
+      "receivedAtUtc": "2026-01-02T00:00:00Z",
+      "body": "Synthetic lab message only. Purchase order PO-ZERO exists and intentionally contains quantity 0 and value 0. Zero does not mean missing.",
+      "purchaseOrderId": "PO-ZERO",
+      "verificationCode": "SYN-MAIL-0J3T"
+    }
+  },
+  "purchaseOrders": {
+    "PO-1001": {
+      "id": "PO-1001",
+      "PurchaseOrder": "PO-1001",
+      "CompanyCode": "DEMO",
+      "Supplier": "SYNTHETIC-SUPPLIER",
+      "DocumentCurrency": "KRW",
+      "TotalNetAmount": 12000,
+      "items": [
+        {
+          "PurchaseOrderItem": "00010",
+          "Material": "DEMO-COMPONENT",
+          "OrderQuantity": 12,
+          "PurchaseOrderQuantityUnit": "EA",
+          "NetPriceAmount": 1000,
+          "NetAmount": 12000
+        }
+      ],
+      "verificationCode": "SYN-PO-2W9F"
+    },
+    "PO-ZERO": {
+      "id": "PO-ZERO",
+      "PurchaseOrder": "PO-ZERO",
+      "CompanyCode": "DEMO",
+      "Supplier": "SYNTHETIC-SUPPLIER",
+      "DocumentCurrency": "KRW",
+      "TotalNetAmount": 0,
+      "items": [
+        {
+          "PurchaseOrderItem": "00010",
+          "Material": "DEMO-ZERO",
+          "OrderQuantity": 0,
+          "PurchaseOrderQuantityUnit": "EA",
+          "NetPriceAmount": 0,
+          "NetAmount": 0
+        }
+      ],
+      "verificationCode": "SYN-PO-0C6N"
+    }
+  }
+}

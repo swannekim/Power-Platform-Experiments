@@ -1,0 +1,14 @@
+Synthetic procurement snapshot
+Snapshot date: 2026-09-20
+Snapshot revision: SNAPSHOT-001
+This file contains fictional demonstration data only. It is not connected to mail or SAP.
+
+Purchase order: PO-1001
+Company code: DEMO
+Supplier: SYNTHETIC-SUPPLIER
+Material: DEMO-COMPONENT
+Order quantity: 7 EA
+Net price per unit: 1000 KRW
+Total net amount: 7000 KRW
+
+These values describe only SNAPSHOT-001, not the current private API. This snapshot contains no live verification code, server timestamp, or observation ID.

@@ -1,0 +1,12 @@
+/private/
+**/node_modules/
+**/.env
+**/.env.*
+**/env/
+**/appPackage/build/
+**/.localConfigs
+**/*.credential.clixml
+**/*.pfx
+**/*.key
+**/*.zip
+**/infra/main.json

@@ -1,0 +1,15 @@
+{
+  "recordedAtUtc": "2026-09-21T07:37:12.7824827Z",
+  "hubConnections": [
+    "APIM spoke: Succeeded",
+    "Backend spoke: Succeeded"
+  ],
+  "apimSpokePeering": "Connected to managed hub VNet",
+  "backendSpokePeering": "Connected to the same managed hub VNet",
+  "directSpokeToSpokePeering": false,
+  "backendPrivateDnsAddresses": [
+    "10.90.2.4"
+  ],
+  "note": "Virtual WAN creates hub-managed peerings. Absence of direct spoke-to-spoke peering does not mean the peering lists are empty.",
+  "privateSourceSha256": "6169AA709DB9D67B170787B6D0D7526E58FCD01853008104CC607AC031553613"
+}

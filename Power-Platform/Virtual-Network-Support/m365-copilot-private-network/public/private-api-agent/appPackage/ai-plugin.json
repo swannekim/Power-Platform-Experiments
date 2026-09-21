@@ -1,0 +1,35 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/copilot/plugin/v2.4/schema.json",
+  "schema_version": "v2.4",
+  "name_for_human": "Synthetic Private Gateway",
+  "namespace": "PrivateGateway",
+  "description_for_human": "Read synthetic mail and purchase orders through authenticated APIM.",
+  "description_for_model": "Read current synthetic records from the private backend. Every operation returns fresh backend observation metadata. Pass the user's exact record ID and nonce. Errors are not successful record reads.",
+  "functions": [
+    {
+      "name": "getMail",
+      "description": "Read one synthetic mail record and live backend observation metadata."
+    },
+    {
+      "name": "getPurchaseOrder",
+      "description": "Read one synthetic SAP-shaped purchase order. Zero quantity or value is valid; HTTP 404 means missing."
+    },
+    {
+      "name": "getHealth",
+      "description": "Read current private-backend health with fresh observation metadata."
+    }
+  ],
+  "runtimes": [
+    {
+      "type": "OpenApi",
+      "auth": {
+        "type": "ApiKeyPluginVault",
+        "reference_id": "${{API_KEY_REGISTRATION_ID}}"
+      },
+      "spec": {
+        "url": "openapi.json"
+      },
+      "run_for_functions": ["getMail", "getPurchaseOrder", "getHealth"]
+    }
+  ]
+}

@@ -1,3 +1,4 @@
 # Keep tenant-specific lab originals local. Publish only the sanitized edition.
 /Virtual-Network-Support/*
 !/Virtual-Network-Support/public/
+!/Virtual-Network-Support/m365-copilot-private-network/

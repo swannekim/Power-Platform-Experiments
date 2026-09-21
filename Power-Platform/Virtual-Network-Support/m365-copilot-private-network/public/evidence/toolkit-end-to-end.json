@@ -1,0 +1,644 @@
+{
+  "date": "2026-09-21",
+  "status": "PASS - actual Toolkit agent allow/deny/recovery and record cases",
+  "origin": "Actual Copilot UI, DeveloperLogs, Azure control-plane reads and correlated APIM telemetry",
+  "rootCause": {
+    "observedError": "App ID in request does not match the App ID in the configured authentication. Please verify and update the App ID in your authentication configuration.",
+    "previousBinding": "Developer Portal / external manifest app ID",
+    "correctedBinding": "Verified launchInfo.acquisition.appId for the personally installed agent",
+    "updateRecordedAtUtc": "2026-09-21T07:02:33.538Z",
+    "firstConfirmedSuccessfulBackendResponseAtUtc": "2026-09-21T07:09:57.612Z",
+    "propagationNote": "The immediate post-update attempt still failed; later success establishes propagation in this run, not a fixed cache TTL.",
+    "unchanged": [
+      "HomeTenant",
+      "SpecificApp",
+      "API base URL",
+      "stored secret",
+      "agent package",
+      "backend API"
+    ]
+  },
+  "cases": [
+    {
+      "case": "health",
+      "result": "PASS",
+      "nonce": "toolkit-health-002",
+      "conversationId": "3295ea2c-6a22-4041-ac61-82e8a24fdaab",
+      "requestId": "89565121-51a7-4993-ad13-49181e3e6975",
+      "capturedAtUtc": "2026-09-21T07:10:08.907Z",
+      "function": "getHealth",
+      "httpStatus": 200,
+      "authStatus": 0,
+      "requestPath": "/synthetic/health",
+      "response": {
+        "synthetic": true,
+        "status": "ok",
+        "service": "synthetic-private-gateway",
+        "nonce": "toolkit-health-002",
+        "observedAtUtc": "2026-09-21T07:09:57.612Z",
+        "observationId": "88c9220b-7628-4bef-b293-19764db82724",
+        "verificationCode": "SYN-HEALTH-6H2P"
+      },
+      "transcript": "You said:\n-developer on\n\nPrivate API Lab said:\nPrivate API Lab\nSuccessfully enabled developer mode.\nYou said:\nCall getHealth with nonce toolkit-health-002. Return only the current API response including the echoed nonce, observedAtUtc and observationId, or the actual error if it fails.\n\nPrivate API Lab said:\nPrivate API Lab\n{\"synthetic\":true,\"status\":\"ok\",\"service\":\"synthetic-private-gateway\",\"nonce\":\"toolkit-health-002\",\"observedAtUtc\":\"2026-09-21T07:09:57.612Z\",\"observationId\":\"88c9220b-7628-4bef-b293-19764db82724\",\"verificationCode\":\"SYN-HEALTH-6H2P\"}\nSources\nAgent debug info\n\nRaw info\n\nDocumentation\n\nCall getHealth with a fresh nonce\nCall getMail with a record ID and nonce\nCall getPurchaseOrder with an order ID and nonce",
+      "telemetry": {
+        "snapshotReadAtUtc": "2026-09-21T07:11:53.9431814Z",
+        "snapshotRuleAccess": "Allow",
+        "snapshotCaution": "This is a non-atomic current-state snapshot, not proof of network state at the time of historical telemetry.",
+        "requestCount": 1,
+        "backendDependencyCount": 1,
+        "backendObservationCount": 1,
+        "events": [
+          {
+            "TimeGenerated": "2026-09-21T07:09:57.5530282Z",
+            "EvidenceKind": "request",
+            "OperationId": "5d6bc8042816f884e7a5b4949ea36e1c",
+            "Id": "b7e4820c52256a47",
+            "ParentId": "5d6bc8042816f884e7a5b4949ea36e1c",
+            "Name": "GET /synthetic/health",
+            "Success": "True",
+            "ResultCode": "200",
+            "DurationMs": "64.2837",
+            "Nonce": "toolkit-health-002",
+            "ExactNonceMatch": "True",
+            "ExpectedBackend": "False",
+            "BackendObservationPresent": "False",
+            "BackendObservedAtUtc": "2026-09-21T07:09:57.612Z",
+            "BackendObservationId": "88c9220b-7628-4bef-b293-19764db82724"
+          },
+          {
+            "TimeGenerated": "2026-09-21T07:09:57.5536352Z",
+            "EvidenceKind": "dependency",
+            "OperationId": "5d6bc8042816f884e7a5b4949ea36e1c",
+            "Id": "9be303b7038f1f74",
+            "ParentId": "b7e4820c52256a47",
+            "Name": "GET /health",
+            "Success": "True",
+            "ResultCode": "200",
+            "DurationMs": "61.2514",
+            "Nonce": "toolkit-health-002",
+            "ExactNonceMatch": "True",
+            "ExpectedBackend": "True",
+            "BackendObservationPresent": "True",
+            "BackendObservedAtUtc": "2026-09-21T07:09:57.612Z",
+            "BackendObservationId": "88c9220b-7628-4bef-b293-19764db82724"
+          }
+        ]
+      }
+    },
+    {
+      "case": "purchase-order",
+      "result": "PASS",
+      "nonce": "toolkit-allow-004",
+      "conversationId": "7d72d11d-6feb-47e5-8d15-397baf59e12d",
+      "requestId": "7723d526-ac9a-4622-a37b-7dd4a6ffb085",
+      "capturedAtUtc": "2026-09-21T07:12:44.882Z",
+      "function": "getPurchaseOrder",
+      "httpStatus": 200,
+      "authStatus": 0,
+      "requestPath": "/synthetic/purchase-orders/PO-1001",
+      "response": {
+        "synthetic": true,
+        "record": {
+          "id": "PO-1001",
+          "PurchaseOrder": "PO-1001",
+          "CompanyCode": "DEMO",
+          "Supplier": "SYNTHETIC-SUPPLIER",
+          "DocumentCurrency": "KRW",
+          "TotalNetAmount": 12000,
+          "items": [
+            {
+              "PurchaseOrderItem": "00010",
+              "Material": "DEMO-COMPONENT",
+              "OrderQuantity": 12,
+              "PurchaseOrderQuantityUnit": "EA",
+              "NetPriceAmount": 1000,
+              "NetAmount": 12000
+            }
+          ]
+        },
+        "nonce": "toolkit-allow-004",
+        "observedAtUtc": "2026-09-21T07:12:31.951Z",
+        "observationId": "0e84a72e-3a87-4ff6-857a-011b9e6c38b0",
+        "verificationCode": "SYN-PO-2W9F"
+      },
+      "transcript": "You said:\n-developer on\n\nPrivate API Lab said:\nPrivate API Lab\nSuccessfully enabled developer mode.\nYou said:\nRead PO-1001 using nonce toolkit-allow-004. Return quantity, total amount, currency, verificationCode, observedAtUtc, observationId and the echoed nonce exactly from the current API response.\n\nPrivate API Lab said:\nPrivate API Lab\nFrom the current API response for PO-1001:\nQuantity: 12\nTotal amount: 12000\nCurrency: KRW\nverificationCode: SYN-PO-2W9F\nobservedAtUtc: 2026-09-21T07:12:31.951Z\nobservationId: 0e84a72e-3a87-4ff6-857a-011b9e6c38b0\nechoed nonce: toolkit-allow-004\nSources\nAgent debug info\n\nRaw info\n\nDocumentation\n\nRead PO-1002 with a fresh nonce\nSummarize the returned PO-1001 values\nRead the mail record linked to this order",
+      "telemetry": {
+        "snapshotReadAtUtc": "2026-09-21T07:13:51.3911791Z",
+        "snapshotRuleAccess": "Allow",
+        "snapshotCaution": "This is a non-atomic current-state snapshot, not proof of network state at the time of historical telemetry.",
+        "requestCount": 1,
+        "backendDependencyCount": 1,
+        "backendObservationCount": 1,
+        "events": [
+          {
+            "TimeGenerated": "2026-09-21T07:12:31.9292189Z",
+            "EvidenceKind": "request",
+            "OperationId": "3db9578440daddc9f32054ea828ea156",
+            "Id": "d4052a36ac6e2045",
+            "ParentId": "3db9578440daddc9f32054ea828ea156",
+            "Name": "GET /synthetic/purchase-orders/PO-1001",
+            "Success": "True",
+            "ResultCode": "200",
+            "DurationMs": "24.7593",
+            "Nonce": "toolkit-allow-004",
+            "ExactNonceMatch": "True",
+            "ExpectedBackend": "False",
+            "BackendObservationPresent": "False",
+            "BackendObservedAtUtc": "2026-09-21T07:12:31.951Z",
+            "BackendObservationId": "0e84a72e-3a87-4ff6-857a-011b9e6c38b0"
+          },
+          {
+            "TimeGenerated": "2026-09-21T07:12:31.9298174Z",
+            "EvidenceKind": "dependency",
+            "OperationId": "3db9578440daddc9f32054ea828ea156",
+            "Id": "7807952cf3d5d802",
+            "ParentId": "d4052a36ac6e2045",
+            "Name": "GET /purchase-orders/PO-1001",
+            "Success": "True",
+            "ResultCode": "200",
+            "DurationMs": "23.9835",
+            "Nonce": "toolkit-allow-004",
+            "ExactNonceMatch": "True",
+            "ExpectedBackend": "True",
+            "BackendObservationPresent": "True",
+            "BackendObservedAtUtc": "2026-09-21T07:12:31.951Z",
+            "BackendObservationId": "0e84a72e-3a87-4ff6-857a-011b9e6c38b0"
+          }
+        ]
+      }
+    },
+    {
+      "case": "mail",
+      "result": "PASS",
+      "nonce": "toolkit-mail-001",
+      "conversationId": "d0fe3ae2-cb0e-4291-96a7-974e2429c283",
+      "requestId": "b317aa8e-b17e-431d-ab5d-8091b8496b2e",
+      "capturedAtUtc": "2026-09-21T07:14:24.275Z",
+      "function": "getMail",
+      "httpStatus": 200,
+      "authStatus": 0,
+      "requestPath": "/synthetic/mail/MAIL-1001",
+      "response": {
+        "synthetic": true,
+        "record": {
+          "id": "MAIL-1001",
+          "subject": "Synthetic order review: PO-1001",
+          "from": "procurement@example.invalid",
+          "to": "reviewer@example.invalid",
+          "receivedAtUtc": "2026-01-01T00:00:00Z",
+          "body": "Synthetic lab message only. Review purchase order PO-1001 for 12 demonstration components. No real mailbox or business system is connected.",
+          "purchaseOrderId": "PO-1001"
+        },
+        "nonce": "toolkit-mail-001",
+        "observedAtUtc": "2026-09-21T07:14:05.077Z",
+        "observationId": "5bdbabca-f501-4996-9bb2-92ef2a4189d7",
+        "verificationCode": "SYN-MAIL-5D7Q"
+      },
+      "transcript": "You said:\n-developer on\n\nPrivate API Lab said:\nPrivate API Lab\nSuccessfully enabled developer mode.\nYou said:\nRead MAIL-1001 using nonce toolkit-mail-001. Return the synthetic mail record, verificationCode, observedAtUtc, observationId and echoed nonce from the current API response. Do not claim it is a real mailbox.\n\nPrivate API Lab said:\nPrivate API Lab\nSynthetic mail record (all data is synthetic and does not represent a real mailbox):\nJSON\n1\n{\n2\n  \"record\": {\n3\n    \"id\": \"MAIL-1001\",\n4\n    \"subject\": \"Synthetic order review: PO-1001\",\n5\n    \"from\": \"procurement@example.invalid\",\n6\n    \"to\": \"reviewer@example.invalid\",\n7\n    \"receivedAtUtc\": \"2026-01-01T00:00:00Z\",\n8\n    \"body\": \"Synthetic lab message only. Review purchase order PO-1001 for 12 demonstration components. No real mailbox or business system is connected.\",\n9\n    \"purchaseOrderId\": \"PO-1001\"\n10\n  },\n11\n  \"verificationCode\": \"SYN-MAIL-5D7Q\",\n12\n  \"observedAtUtc\": \"2026-09-21T07:14:05.077Z\",\n13\n  \"observationId\": \"5bdbabca-f501-4996-9bb2-92ef2a4189d7\",\n14\n  \"nonce\": \"toolkit-mail-001\"\n15\n}\n16\n``\nShow more lines\nValues returned by the current API response:\nverificationCode: SYN-MAIL-5D7Q\nobservedAtUtc: 2026-09-21T07:14:05.077Z\nobservationId: 5bdbabca-f501-4996-9bb2-92ef2a4189d7\nechoed nonce: toolkit-mail-001\nSources\nAgent debug info\n\nRaw info\n\nDocumentation\n\nRead the linked purchase order PO-1001\nSummarize the synthetic mail record\nExtract the key order details from this mail",
+      "telemetry": {
+        "snapshotReadAtUtc": "2026-09-21T07:15:36.3779059Z",
+        "snapshotRuleAccess": "Allow",
+        "snapshotCaution": "This is a non-atomic current-state snapshot, not proof of network state at the time of historical telemetry.",
+        "requestCount": 1,
+        "backendDependencyCount": 1,
+        "backendObservationCount": 1,
+        "events": [
+          {
+            "TimeGenerated": "2026-09-21T07:14:05.0616744Z",
+            "EvidenceKind": "request",
+            "OperationId": "49da609910516bd8638ec5a436a76b18",
+            "Id": "5cb614377890c99e",
+            "ParentId": "49da609910516bd8638ec5a436a76b18",
+            "Name": "GET /synthetic/mail/MAIL-1001",
+            "Success": "True",
+            "ResultCode": "200",
+            "DurationMs": "18.4601",
+            "Nonce": "toolkit-mail-001",
+            "ExactNonceMatch": "True",
+            "ExpectedBackend": "False",
+            "BackendObservationPresent": "False",
+            "BackendObservedAtUtc": "2026-09-21T07:14:05.077Z",
+            "BackendObservationId": "5bdbabca-f501-4996-9bb2-92ef2a4189d7"
+          },
+          {
+            "TimeGenerated": "2026-09-21T07:14:05.0622244Z",
+            "EvidenceKind": "dependency",
+            "OperationId": "49da609910516bd8638ec5a436a76b18",
+            "Id": "0a10fa73fa88d971",
+            "ParentId": "5cb614377890c99e",
+            "Name": "GET /mail/MAIL-1001",
+            "Success": "True",
+            "ResultCode": "200",
+            "DurationMs": "17.6733",
+            "Nonce": "toolkit-mail-001",
+            "ExactNonceMatch": "True",
+            "ExpectedBackend": "True",
+            "BackendObservationPresent": "True",
+            "BackendObservedAtUtc": "2026-09-21T07:14:05.077Z",
+            "BackendObservationId": "5bdbabca-f501-4996-9bb2-92ef2a4189d7"
+          }
+        ]
+      }
+    },
+    {
+      "case": "zero-value",
+      "result": "PASS",
+      "nonce": "toolkit-zero-001",
+      "conversationId": "613405c8-8181-4faf-9372-a07157b26803",
+      "requestId": "9d5b3169-eba7-4bfc-b6a4-8a16df37b6cd",
+      "capturedAtUtc": "2026-09-21T07:16:04.305Z",
+      "function": "getPurchaseOrder",
+      "httpStatus": 200,
+      "authStatus": 0,
+      "requestPath": "/synthetic/purchase-orders/PO-ZERO",
+      "response": {
+        "synthetic": true,
+        "record": {
+          "id": "PO-ZERO",
+          "PurchaseOrder": "PO-ZERO",
+          "CompanyCode": "DEMO",
+          "Supplier": "SYNTHETIC-SUPPLIER",
+          "DocumentCurrency": "KRW",
+          "TotalNetAmount": 0,
+          "items": [
+            {
+              "PurchaseOrderItem": "00010",
+              "Material": "DEMO-ZERO",
+              "OrderQuantity": 0,
+              "PurchaseOrderQuantityUnit": "EA",
+              "NetPriceAmount": 0,
+              "NetAmount": 0
+            }
+          ]
+        },
+        "nonce": "toolkit-zero-001",
+        "observedAtUtc": "2026-09-21T07:15:51.181Z",
+        "observationId": "ac8b945f-329e-443c-96a6-5c7502bee5a9",
+        "verificationCode": "SYN-PO-0C6N"
+      },
+      "transcript": "You said:\n-developer on\n\nPrivate API Lab said:\nPrivate API Lab\nSuccessfully enabled developer mode.\nYou said:\nRead PO-ZERO using nonce toolkit-zero-001. Return quantity, total amount, currency, verificationCode, observedAtUtc, observationId and echoed nonce. State whether this is an existing zero-valued record or a missing record based only on the current API response.\n\nPrivate API Lab said:\nPrivate API Lab\nCurrent API response for PO-ZERO:\nQuantity: 0\nTotal amount: 0\nCurrency: KRW\nverificationCode: SYN-PO-0C6N\nobservedAtUtc: 2026-09-21T07:15:51.181Z\nobservationId: ac8b945f-329e-443c-96a6-5c7502bee5a9\nEchoed nonce: toolkit-zero-001\nAssessment based only on the current API response:\nExisting zero-valued record (not a missing record), because the API returned a successful record with quantity 0 and total amount 0 rather than a 404/not found response.\nSource values returned by the current successful invocation: quantity 0 (item OrderQuantity), total amount 0 (TotalNetAmount), currency KRW (DocumentCurrency), nonce toolkit-zero-001, observedAtUtc 2026-09-21T07:15:51.181Z, observationId ac8b945f-329e-443c-96a6-5c7502bee5a9, and verificationCode SYN-PO-0C6N.\nSources\nAgent debug info\n\nRaw info\n\nDocumentation\n\nSummarize the PO-ZERO result in one sentence\nFormat these values as a compact table\nExplain why quantity 0 does not mean the record is missing",
+      "telemetry": {
+        "snapshotReadAtUtc": "2026-09-21T07:17:02.6740226Z",
+        "snapshotRuleAccess": "Allow",
+        "snapshotCaution": "This is a non-atomic current-state snapshot, not proof of network state at the time of historical telemetry.",
+        "requestCount": 1,
+        "backendDependencyCount": 1,
+        "backendObservationCount": 1,
+        "events": [
+          {
+            "TimeGenerated": "2026-09-21T07:15:51.1673587Z",
+            "EvidenceKind": "request",
+            "OperationId": "cb349dbaf4c2534a932b1164acdcfcb1",
+            "Id": "d4abaa98a455bd8d",
+            "ParentId": "cb349dbaf4c2534a932b1164acdcfcb1",
+            "Name": "GET /synthetic/purchase-orders/PO-ZERO",
+            "Success": "True",
+            "ResultCode": "200",
+            "DurationMs": "17.6619",
+            "Nonce": "toolkit-zero-001",
+            "ExactNonceMatch": "True",
+            "ExpectedBackend": "False",
+            "BackendObservationPresent": "False",
+            "BackendObservedAtUtc": "2026-09-21T07:15:51.181Z",
+            "BackendObservationId": "ac8b945f-329e-443c-96a6-5c7502bee5a9"
+          },
+          {
+            "TimeGenerated": "2026-09-21T07:15:51.167831Z",
+            "EvidenceKind": "dependency",
+            "OperationId": "cb349dbaf4c2534a932b1164acdcfcb1",
+            "Id": "aa9cd61bb0d4e960",
+            "ParentId": "d4abaa98a455bd8d",
+            "Name": "GET /purchase-orders/PO-ZERO",
+            "Success": "True",
+            "ResultCode": "200",
+            "DurationMs": "16.9701",
+            "Nonce": "toolkit-zero-001",
+            "ExactNonceMatch": "True",
+            "ExpectedBackend": "True",
+            "BackendObservationPresent": "True",
+            "BackendObservedAtUtc": "2026-09-21T07:15:51.181Z",
+            "BackendObservationId": "ac8b945f-329e-443c-96a6-5c7502bee5a9"
+          }
+        ]
+      }
+    },
+    {
+      "case": "missing-record",
+      "result": "PASS",
+      "nonce": "toolkit-missing-001",
+      "conversationId": "7349e059-876c-4212-9e92-505d3cdf2e38",
+      "requestId": "ccb6ce36-469c-49c1-b7b2-2b05ecb4ef46",
+      "capturedAtUtc": "2026-09-21T07:17:27.224Z",
+      "function": "getPurchaseOrder",
+      "httpStatus": 404,
+      "authStatus": 0,
+      "requestPath": "/synthetic/purchase-orders/MISSING-9999",
+      "response": {
+        "synthetic": true,
+        "error": {
+          "code": "RecordNotFound",
+          "message": "The synthetic record does not exist.",
+          "id": "MISSING-9999"
+        },
+        "nonce": "toolkit-missing-001",
+        "observedAtUtc": "2026-09-21T07:17:14.136Z",
+        "observationId": "c7a76640-99ac-449f-9a67-0efd11900fd7",
+        "verificationCode": "SYN-ERROR-8R4K"
+      },
+      "transcript": "You said:\n-developer on\n\nPrivate API Lab said:\nPrivate API Lab\nSuccessfully enabled developer mode.\nYou said:\nRead MISSING-9999 as a purchase order using nonce toolkit-missing-001. Report the actual API result and whether a record was returned. Include the echoed nonce and backend observation fields if the API supplies them. Do not invent or substitute a record.\n\nPrivate API Lab said:\nPrivate API Lab\nRequested purchase order lookup result for ID MISSING-9999 with nonce toolkit-missing-001:\nRecord returned: No\nStatus: Requested record was not found (404-style record-not-found response)\nAPI response details (as returned):\nJSON\n1\n{\n2\n  \"synthetic\": true,\n3\n  \"error\": {\n4\n    \"code\": \"RecordNotFound\",\n5\n    \"message\": \"The synthetic record does not exist.\",\n6\n    \"id\": \"MISSING-9999\"\n7\n  },\n8\n  \"nonce\": \"toolkit-missing-001\",\n9\n  \"observedAtUtc\": \"2026-09-21T07:17:14.136Z\",\n10\n  \"observationId\": \"c7a76640-99ac-449f-9a67-0efd11900fd7\",\n11\n  \"verificationCode\": \"SYN-ERROR-8R4K\"\n12\n}\nBackend observation fields returned:\nEchoed nonce: toolkit-missing-001\nverificationCode: SYN-ERROR-8R4K\nobservedAtUtc: 2026-09-21T07:17:14.136Z\nobservationId: c7a76640-99ac-449f-9a67-0efd11900fd7\nNo purchase order record was returned.\nAgent debug info\n\nRaw info\n\nDocumentation\n\nCheck another purchase order ID\nRead a mail record with a nonce\nCheck API health with a nonce",
+      "telemetry": {
+        "snapshotReadAtUtc": "2026-09-21T07:18:53.84537Z",
+        "snapshotRuleAccess": "Allow",
+        "snapshotCaution": "This is a non-atomic current-state snapshot, not proof of network state at the time of historical telemetry.",
+        "requestCount": 1,
+        "backendDependencyCount": 1,
+        "backendObservationCount": 1,
+        "events": [
+          {
+            "TimeGenerated": "2026-09-21T07:17:14.1151318Z",
+            "EvidenceKind": "request",
+            "OperationId": "80deb91cf5a9b08862fbec50ff6bd0f3",
+            "Id": "26bc756b813cdfe0",
+            "ParentId": "80deb91cf5a9b08862fbec50ff6bd0f3",
+            "Name": "GET /synthetic/purchase-orders/MISSING-9999",
+            "Success": "False",
+            "ResultCode": "404",
+            "DurationMs": "41.6776",
+            "Nonce": "toolkit-missing-001",
+            "ExactNonceMatch": "True",
+            "ExpectedBackend": "False",
+            "BackendObservationPresent": "False",
+            "BackendObservedAtUtc": "2026-09-21T07:17:14.136Z",
+            "BackendObservationId": "c7a76640-99ac-449f-9a67-0efd11900fd7"
+          },
+          {
+            "TimeGenerated": "2026-09-21T07:17:14.1156059Z",
+            "EvidenceKind": "dependency",
+            "OperationId": "80deb91cf5a9b08862fbec50ff6bd0f3",
+            "Id": "f3c5dcea986210da",
+            "ParentId": "26bc756b813cdfe0",
+            "Name": "GET /purchase-orders/MISSING-9999",
+            "Success": "False",
+            "ResultCode": "404",
+            "DurationMs": "40.9986",
+            "Nonce": "toolkit-missing-001",
+            "ExactNonceMatch": "True",
+            "ExpectedBackend": "True",
+            "BackendObservationPresent": "True",
+            "BackendObservedAtUtc": "2026-09-21T07:17:14.136Z",
+            "BackendObservationId": "c7a76640-99ac-449f-9a67-0efd11900fd7"
+          }
+        ]
+      }
+    },
+    {
+      "case": "network-denial",
+      "result": "PASS",
+      "nonce": "toolkit-deny-001",
+      "conversationId": "d412ce41-ff61-43ec-b6b1-b39b17cf55d7",
+      "requestId": "0f666a9f-65e1-471e-a554-4ec3b3bd3909",
+      "capturedAtUtc": "2026-09-21T07:21:50.054Z",
+      "function": "getPurchaseOrder",
+      "httpStatus": 500,
+      "authStatus": 0,
+      "requestPath": "/synthetic/purchase-orders/PO-1001",
+      "response": {
+        "statusCode": 500,
+        "message": "Internal server error",
+        "activityId": "034a3da2-dedf-4edf-8789-d1085fc323f9"
+      },
+      "transcript": "You said:\n-developer on\n\nPrivate API Lab said:\nPrivate API Lab\nSuccessfully enabled developer mode.\nYou said:\nRead PO-1001 using nonce toolkit-deny-001. Return quantity, total amount, currency, verificationCode, observedAtUtc, observationId and echoed nonce only from this current API response. If the call fails, report the actual error and do not substitute any earlier values.\n\nPrivate API Lab said:\nPrivate API Lab\nLive data could not be retrieved.\nActual error from the current API call for purchase order PO-1001 with nonce toolkit-deny-001:\nPlain Text\n1\nstatusCode: 500\n2\nmessage: Internal server error\n3\nactivityId: 034a3da2-dedf-4edf-8789-d1085fc323f9\nNo quantity, total amount, currency, verificationCode, observedAtUtc, observationId, or echoed nonce were returned because the API call failed.\nAgent debug info\n\nRaw info\n\nDocumentation",
+      "telemetry": {
+        "snapshotReadAtUtc": "2026-09-21T07:22:42.9720827Z",
+        "snapshotRuleAccess": "Deny",
+        "snapshotCaution": "This is a non-atomic current-state snapshot, not proof of network state at the time of historical telemetry.",
+        "requestCount": 1,
+        "backendDependencyCount": 1,
+        "backendObservationCount": 0,
+        "events": [
+          {
+            "TimeGenerated": "2026-09-21T07:21:31.2086278Z",
+            "EvidenceKind": "request",
+            "OperationId": "ae653db9f966507e269e49da5210c299",
+            "Id": "f5a2c02e825ede33",
+            "ParentId": "ae653db9f966507e269e49da5210c299",
+            "Name": "GET /synthetic/purchase-orders/PO-1001",
+            "Success": "False",
+            "ResultCode": "500",
+            "DurationMs": "8000.1274",
+            "Nonce": "toolkit-deny-001",
+            "ExactNonceMatch": "True",
+            "ExpectedBackend": "False",
+            "BackendObservationPresent": "False",
+            "BackendObservedAtUtc": "",
+            "BackendObservationId": ""
+          },
+          {
+            "TimeGenerated": "2026-09-21T07:21:31.2089665Z",
+            "EvidenceKind": "dependency",
+            "OperationId": "ae653db9f966507e269e49da5210c299",
+            "Id": "9af533002e8a10c8",
+            "ParentId": "f5a2c02e825ede33",
+            "Name": "GET /purchase-orders/PO-1001",
+            "Success": "False",
+            "ResultCode": "",
+            "DurationMs": "7998.8176",
+            "Nonce": "toolkit-deny-001",
+            "ExactNonceMatch": "True",
+            "ExpectedBackend": "True",
+            "BackendObservationPresent": "False",
+            "BackendObservedAtUtc": "",
+            "BackendObservationId": ""
+          }
+        ]
+      }
+    },
+    {
+      "case": "network-recovery",
+      "result": "PASS",
+      "nonce": "toolkit-recovery-001",
+      "conversationId": "b5473991-c18d-49e7-82c8-5513681e56a0",
+      "requestId": "c96ee329-4b69-40b2-8019-3c54e7bfb8f6",
+      "capturedAtUtc": "2026-09-21T07:24:58.737Z",
+      "function": "getPurchaseOrder",
+      "httpStatus": 200,
+      "authStatus": 0,
+      "requestPath": "/synthetic/purchase-orders/PO-1001",
+      "response": {
+        "synthetic": true,
+        "record": {
+          "id": "PO-1001",
+          "PurchaseOrder": "PO-1001",
+          "CompanyCode": "DEMO",
+          "Supplier": "SYNTHETIC-SUPPLIER",
+          "DocumentCurrency": "KRW",
+          "TotalNetAmount": 12000,
+          "items": [
+            {
+              "PurchaseOrderItem": "00010",
+              "Material": "DEMO-COMPONENT",
+              "OrderQuantity": 12,
+              "PurchaseOrderQuantityUnit": "EA",
+              "NetPriceAmount": 1000,
+              "NetAmount": 12000
+            }
+          ]
+        },
+        "nonce": "toolkit-recovery-001",
+        "observedAtUtc": "2026-09-21T07:24:47.69Z",
+        "observationId": "576c6746-2081-4b65-9e4c-d0a900b675dc",
+        "verificationCode": "SYN-PO-2W9F"
+      },
+      "transcript": "You said:\n-developer on\n\nPrivate API Lab said:\nPrivate API Lab\nSuccessfully enabled developer mode.\nYou said:\nRead PO-1001 using nonce toolkit-recovery-001. Return quantity, total amount, currency, verificationCode, observedAtUtc, observationId and echoed nonce only from this current API response. Do not reuse an earlier result.\n\nPrivate API Lab said:\nPrivate API Lab\nQuantity: 12\nTotal amount: 12000\nCurrency: KRW\nverificationCode: SYN-PO-2W9F\nobservedAtUtc: 2026-09-21T07:24:47.690Z\nobservationId: 576c6746-2081-4b65-9e4c-d0a900b675dc\nechoed nonce: toolkit-recovery-001\nSources\nAgent debug info\n\nRaw info\n\nDocumentation\n\nRead PO-1001 again with a fresh nonce\nRead another purchase order with a nonce\nCheck API health with a nonce",
+      "telemetry": {
+        "snapshotReadAtUtc": "2026-09-21T07:26:29.2984563Z",
+        "snapshotRuleAccess": "Allow",
+        "snapshotCaution": "This is a non-atomic current-state snapshot, not proof of network state at the time of historical telemetry.",
+        "requestCount": 1,
+        "backendDependencyCount": 1,
+        "backendObservationCount": 1,
+        "events": [
+          {
+            "TimeGenerated": "2026-09-21T07:24:47.6836264Z",
+            "EvidenceKind": "request",
+            "OperationId": "a8347d9d2973e75370cd030d1d93d748",
+            "Id": "524d9c987ae175fb",
+            "ParentId": "a8347d9d2973e75370cd030d1d93d748",
+            "Name": "GET /synthetic/purchase-orders/PO-1001",
+            "Success": "True",
+            "ResultCode": "200",
+            "DurationMs": "16.992",
+            "Nonce": "toolkit-recovery-001",
+            "ExactNonceMatch": "True",
+            "ExpectedBackend": "False",
+            "BackendObservationPresent": "False",
+            "BackendObservedAtUtc": "2026-09-21T07:24:47.69Z",
+            "BackendObservationId": "576c6746-2081-4b65-9e4c-d0a900b675dc"
+          },
+          {
+            "TimeGenerated": "2026-09-21T07:24:47.6839775Z",
+            "EvidenceKind": "dependency",
+            "OperationId": "a8347d9d2973e75370cd030d1d93d748",
+            "Id": "752bde79b3017884",
+            "ParentId": "524d9c987ae175fb",
+            "Name": "GET /purchase-orders/PO-1001",
+            "Success": "True",
+            "ResultCode": "200",
+            "DurationMs": "14.4901",
+            "Nonce": "toolkit-recovery-001",
+            "ExactNonceMatch": "True",
+            "ExpectedBackend": "True",
+            "BackendObservationPresent": "True",
+            "BackendObservedAtUtc": "2026-09-21T07:24:47.69Z",
+            "BackendObservationId": "576c6746-2081-4b65-9e4c-d0a900b675dc"
+          }
+        ]
+      }
+    }
+  ],
+  "networkStates": [
+    {
+      "recordedAtUtc": "2026-09-21T07:18:54.7163615Z",
+      "requestedAccess": "Get",
+      "previousAccess": "Allow",
+      "access": "Allow",
+      "backendPublicNetworkAccess": "Disabled",
+      "privateEndpointNetworkPolicies": "NetworkSecurityGroupEnabled",
+      "rule": {
+        "direction": "Inbound",
+        "priority": 100,
+        "protocol": "Tcp",
+        "sourceAddressPrefix": "10.90.1.0/27",
+        "sourcePortRange": "*",
+        "destinationAddressPrefix": "10.90.2.0/27",
+        "destinationPortRange": "443"
+      }
+    },
+    {
+      "recordedAtUtc": "2026-09-21T07:19:29.5405602Z",
+      "requestedAccess": "Deny",
+      "previousAccess": "Allow",
+      "access": "Deny",
+      "backendPublicNetworkAccess": "Disabled",
+      "privateEndpointNetworkPolicies": "NetworkSecurityGroupEnabled",
+      "rule": {
+        "direction": "Inbound",
+        "priority": 100,
+        "protocol": "Tcp",
+        "sourceAddressPrefix": "10.90.1.0/27",
+        "sourcePortRange": "*",
+        "destinationAddressPrefix": "10.90.2.0/27",
+        "destinationPortRange": "443"
+      }
+    },
+    {
+      "recordedAtUtc": "2026-09-21T07:23:40.1253777Z",
+      "requestedAccess": "Allow",
+      "previousAccess": "Deny",
+      "access": "Allow",
+      "backendPublicNetworkAccess": "Disabled",
+      "privateEndpointNetworkPolicies": "NetworkSecurityGroupEnabled",
+      "rule": {
+        "direction": "Inbound",
+        "priority": 100,
+        "protocol": "Tcp",
+        "sourceAddressPrefix": "10.90.1.0/27",
+        "sourcePortRange": "*",
+        "destinationAddressPrefix": "10.90.2.0/27",
+        "destinationPortRange": "443"
+      }
+    },
+    {
+      "recordedAtUtc": "2026-09-21T07:32:28.6419241Z",
+      "requestedAccess": "Get",
+      "previousAccess": "Allow",
+      "access": "Allow",
+      "backendPublicNetworkAccess": "Disabled",
+      "privateEndpointNetworkPolicies": "NetworkSecurityGroupEnabled",
+      "rule": {
+        "direction": "Inbound",
+        "priority": 100,
+        "protocol": "Tcp",
+        "sourceAddressPrefix": "10.90.1.0/27",
+        "sourcePortRange": "*",
+        "destinationAddressPrefix": "10.90.2.0/27",
+        "destinationPortRange": "443"
+      }
+    }
+  ],
+  "finalState": {
+    "access": "Allow",
+    "backendPublicNetworkAccess": "Disabled"
+  },
+  "limits": [
+    "Public authenticated Microsoft 365-to-APIM ingress; private APIM-to-backend path.",
+    "Synthetic mail and purchase-order API, not production mail, SAP or an on-premises network.",
+    "Classic APIM Developer with VNet/vHub/private endpoint; NSG substitutes for a firewall.",
+    "One controlled deny/recovery cycle; not a reliability, scale, SLA or regional failover measurement.",
+    "Agent Builder is an uploaded snapshot comparison, not an invoked-and-network-blocked API action."
+  ],
+  "redaction": "Account, tenant, subscription, app/registration IDs, endpoint hostnames and headers omitted. Synthetic observation and correlation IDs retained.",
+  "privateSourceSha256": {
+    "lab-auth-binding-corrected.json": "A5C6474512110E6D14795CBA466E7B83230D2D4FCC20F1A9A6A6BDBB33DD5D2B",
+    "lab-acquired-runtime-app-id.json": "A47E6272AAD127023A28A3954A863C5E368C4AEFE4D46C3708431F45C19B995A",
+    "toolkit-auth-appid-mismatch.json": "D7C662DFF3F14737E9DD7895FB56046E54900F2EED2A0BD667BF9EB6EC0C0804",
+    "network-agent-before.json": "8C15DF35736014C9D978736BE33711E45FA7470C0468095F1D540AEE3BBBB604",
+    "network-agent-deny.json": "1C277D602895CBA2AE1BCED1BA52179213BA7D56606ECEB43E64E1FFECD89106",
+    "network-agent-restored.json": "DB7A58D35C4F2B70E3E1C1CAF3F202315FBF4FDEC130166076792E73151DE8E7",
+    "network-final-agent-state.json": "CA8C508809E87B52D0F47E1CF20DC9B8D71F3E853CFAD2C0C1C6035B352CC3EA",
+    "toolkit-health-002.json": "C89D55A68D8CCE606E98E4C2FE9BF0EA8F331C93AA3D9B53F069C9E580458838",
+    "toolkit-health-002-telemetry.json": "7972B9652B8F0A77B85A2CDE560458C5347F3109785CCDD44FF42F1A21C8B992",
+    "toolkit-allow-004.json": "187B1E06E8843AF8708ED19A90DC21571597C1436D3F68AF57CDC885BD29FDE6",
+    "toolkit-allow-004-telemetry.json": "7DB9C1ED52A2B2913DC45EEDE8FED98832F6AFC8FE6016BE84A4A1D78B7877FD",
+    "toolkit-mail-001.json": "A2BA9C1C8F3FC4D0A68E09F7359A314CDC88CE58D108EC6A32C3433ED9CD446F",
+    "toolkit-mail-001-telemetry.json": "D89C3EF2B5139AFBB441FD7FC01C203DC687D913B5E7720B4C381F18053BC4D6",
+    "toolkit-zero-001.json": "B2D66D045A43F23DBA54A867A8C65D879FA8AB4EF3279DA15D470A30F8A73E64",
+    "toolkit-zero-001-telemetry.json": "D7DDE7FA6F3CBB681FAE5F43FDEF9E6095B2CA0A6BBDD5B432A5518CE3D889FB",
+    "toolkit-missing-001.json": "AE00641907D9540CAD3F4E85A47BC952FADC0EC7FE2FDA0497352FB5848FF420",
+    "toolkit-missing-001-telemetry.json": "B7D072A791EF4D2A6D6FE72DA13DB32A635E35F269B3B3D4CDDCE8B2C4B231DA",
+    "toolkit-deny-001.json": "D2E9CBE3CF669F2E1FF99E0569129CD8FB8E9A8A3145046424FCCE40777F009D",
+    "toolkit-deny-001-telemetry.json": "15F539AAC1EE388EAF3BB43F27B48DD029E3AE5368567A1B77F39D4329E4492C",
+    "toolkit-recovery-001.json": "7D2722DC028EBE5028B149620C7C16E4E2D6996E38B109487864B86DFAC93DBF",
+    "toolkit-recovery-001-telemetry.json": "3312A4A21086A46E383AE7F6F29824BB2F46DF9E94D0ABF0EA85D1223CADCD9D"
+  }
+}

@@ -1,0 +1,464 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Synthetic private gateway",
+    "version": "1.0.0",
+    "description": "Read-only fake mail and SAP-shaped records for a network lab. No live mail or SAP integration."
+  },
+  "paths": {
+    "/mail/{id}": {
+      "get": {
+        "operationId": "getMail",
+        "summary": "Get a synthetic mail record",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Synthetic mail ID; MISSING-9999 tests a nonexistent record.",
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64,
+              "pattern": "^[A-Za-z0-9-]+$"
+            }
+          },
+          {
+            "name": "nonce",
+            "in": "query",
+            "required": false,
+            "description": "Caller-generated, non-secret proof marker echoed by the backend. Use a fresh value per observation.",
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Synthetic mail with live observation metadata.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MailResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Record does not exist; never replace this with a zero-valued record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "APIM rejected authentication; no backend result."
+          },
+          "403": {
+            "description": "Access denied; no successful backend result."
+          },
+          "500": {
+            "description": "Gateway or backend failure; not a successful record read."
+          },
+          "502": {
+            "description": "Backend connection failed."
+          },
+          "504": {
+            "description": "Backend connection timed out."
+          }
+        }
+      }
+    },
+    "/purchase-orders/{id}": {
+      "get": {
+        "operationId": "getPurchaseOrder",
+        "summary": "Get a synthetic SAP-shaped purchase order",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Synthetic order ID; MISSING-9999 tests a nonexistent record.",
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64,
+              "pattern": "^[A-Za-z0-9-]+$"
+            }
+          },
+          {
+            "name": "nonce",
+            "in": "query",
+            "required": false,
+            "description": "Caller-generated, non-secret proof marker echoed by the backend. Use a fresh value per observation.",
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An existing synthetic order; zero quantity and zero value are valid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PurchaseOrderResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Record does not exist; never replace this with a zero-valued record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "APIM rejected authentication; no backend result."
+          },
+          "403": {
+            "description": "Access denied; no successful backend result."
+          },
+          "500": {
+            "description": "Gateway or backend failure; not a successful record read."
+          },
+          "502": {
+            "description": "Backend connection failed."
+          },
+          "504": {
+            "description": "Backend connection timed out."
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "operationId": "getHealth",
+        "summary": "Observe live backend health",
+        "parameters": [
+          {
+            "name": "nonce",
+            "in": "query",
+            "required": false,
+            "description": "Caller-generated, non-secret proof marker echoed by the backend. Use a fresh value per observation.",
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Backend is reachable and responding now.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request or nonce.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "APIM rejected authentication; no backend result."
+          },
+          "403": {
+            "description": "Access denied; no successful backend result."
+          },
+          "500": {
+            "description": "Gateway or backend failure; not a successful record read."
+          },
+          "502": {
+            "description": "Backend connection failed."
+          },
+          "504": {
+            "description": "Backend connection timed out."
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "apimSubscriptionKey": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "apimSubscriptionKey": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Ocp-Apim-Subscription-Key"
+      }
+    },
+    "schemas": {
+      "Observation": {
+        "type": "object",
+        "required": [
+          "synthetic",
+          "nonce",
+          "observedAtUtc",
+          "observationId",
+          "verificationCode"
+        ],
+        "properties": {
+          "synthetic": {
+            "type": "boolean"
+          },
+          "nonce": {
+            "type": "string",
+            "nullable": true,
+            "minLength": 1,
+            "maxLength": 100,
+            "description": "Echo of the caller nonce, or null when absent or invalid. Not a server-generated observation ID."
+          },
+          "observedAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "observationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "verificationCode": {
+            "type": "string",
+            "description": "Stored synthetic marker returned by the backend; do not infer its value."
+          }
+        }
+      },
+      "MailResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Observation"
+          },
+          {
+            "type": "object",
+            "required": [
+              "record"
+            ],
+            "properties": {
+              "record": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "subject",
+                  "from",
+                  "to",
+                  "receivedAtUtc",
+                  "body",
+                  "purchaseOrderId"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "subject": {
+                    "type": "string"
+                  },
+                  "from": {
+                    "type": "string"
+                  },
+                  "to": {
+                    "type": "string"
+                  },
+                  "receivedAtUtc": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "purchaseOrderId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "PurchaseOrderResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Observation"
+          },
+          {
+            "type": "object",
+            "required": [
+              "record"
+            ],
+            "properties": {
+              "record": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "PurchaseOrder",
+                  "CompanyCode",
+                  "Supplier",
+                  "DocumentCurrency",
+                  "TotalNetAmount",
+                  "items"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "PurchaseOrder": {
+                    "type": "string"
+                  },
+                  "CompanyCode": {
+                    "type": "string"
+                  },
+                  "Supplier": {
+                    "type": "string"
+                  },
+                  "DocumentCurrency": {
+                    "type": "string"
+                  },
+                  "TotalNetAmount": {
+                    "type": "number"
+                  },
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "PurchaseOrderItem",
+                        "Material",
+                        "OrderQuantity",
+                        "PurchaseOrderQuantityUnit",
+                        "NetPriceAmount",
+                        "NetAmount"
+                      ],
+                      "properties": {
+                        "PurchaseOrderItem": {
+                          "type": "string"
+                        },
+                        "Material": {
+                          "type": "string"
+                        },
+                        "OrderQuantity": {
+                          "type": "number"
+                        },
+                        "PurchaseOrderQuantityUnit": {
+                          "type": "string"
+                        },
+                        "NetPriceAmount": {
+                          "type": "number"
+                        },
+                        "NetAmount": {
+                          "type": "number"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "HealthResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Observation"
+          },
+          {
+            "type": "object",
+            "required": [
+              "status",
+              "service"
+            ],
+            "properties": {
+              "status": {
+                "type": "string"
+              },
+              "service": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      "ErrorResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Observation"
+          },
+          {
+            "type": "object",
+            "required": [
+              "error"
+            ],
+            "properties": {
+              "error": {
+                "type": "object",
+                "required": [
+                  "code",
+                  "message"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string"
+                  },
+                  "message": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "${{GATEWAY_BASE_URL}}"
+    }
+  ]
+}
